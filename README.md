@@ -2,10 +2,10 @@
 mockups here
 
 ### User Demographic
-
+The Battleships game is intended for any user. 
 
 ### Purpose
-
+Battleships is a classic fun two player game. 
 
 ### Instructions
 
