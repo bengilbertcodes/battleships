@@ -1,4 +1,6 @@
 # Battleships
+Link to deployed app: https://battleships-bgc-a8f0f32ea97f.herokuapp.com/
+
 mockups here
 
 ### User Demographic
