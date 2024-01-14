@@ -109,5 +109,5 @@ def main():
     count_ships(ENEMY_BOARD)
     
 
-# if __name__ == "__main__":
-#     main()
+if __name__ == "__main__":
+    main()
