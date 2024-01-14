@@ -44,7 +44,7 @@ def get_ship_location():
     # Function to get ship location from the player
     while True:
         try:
-            column = input("Choose a column for your ship (A - H): ").upper()
+            column = input("Choose a column for your ship (A - H): \n").upper()
             if column in 'ABCDEFGH':
                 column = letters_to_numbers[column]
                 break
@@ -56,7 +56,7 @@ def get_ship_location():
 
     while True:
         try:
-            row = input("Choose the row for your ship (1-8): ")
+            row = input("Choose the row for your ship (1-8): \n")
             if row in "12345678":
                 row = int(row) - 1
                 break
