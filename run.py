@@ -1,4 +1,5 @@
 from colorama import Fore, Back, Style
+import random
 from random import randint
 
 
@@ -101,13 +102,26 @@ def count_ships(board):
             if column == 'X':
                 count += 1
     return count
+
+def who_plays_first():
+    # Returns 'player' or 'computer' randomly to decide who starts the game
+    return random.choice(['player', 'computer'])
+
+first_player = who_plays_first()
+
+if first_player == 'player':
+    print("You play first!")
+else:
+    print("Computer plays first!")
             
 
 def main():
     # Main game logic functions
     enemy_create_ships(ENEMY_BOARD)
     player_create_ships(PLAYER_BOARD)
+    who_plays_first()
     count_ships(ENEMY_BOARD)
+    count_ships(PLAYER_BOARD)
     
 
 if __name__ == "__main__":
