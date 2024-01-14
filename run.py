@@ -11,6 +11,9 @@ print('XXXX   X   X   X     X   X     XXXXX  XXXX XXXXX   X   XXXX  XXXX')
 print('X   X XXXXXXX  X     X   X     X         X X   X   X   X        X')
 print('XXXX  X     X  X     X   XXXXX XXXXX  XXXX X   X XXXXX X     XXXX')
 print('')
+print('Welcome to Battleships')
+print('Prepare for Battle!\n')
+
 
 
 # Constants
@@ -86,8 +89,6 @@ def enemy_create_ships(board):
         while board[ship_row][ship_column] == "B":
             ship_row, ship_column = randint(0, BOARD_SIZE - 1), randint(0, BOARD_SIZE - 1)
         board[ship_row][ship_column] = "B"
-        # Display the board after each ship placement
-        display_board(board, "Enemy's Board")  
 
 def player_create_ships(board):
     # Function to allow the player to place their ships on the board
