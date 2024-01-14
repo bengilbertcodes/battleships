@@ -21,16 +21,17 @@ print('Prepare for Battle!\n')
 BOARD_SIZE = 8
 NUM_SHIPS = 5
 
-ENEMY_BOARD = [[' '] * BOARD_SIZE for _ in range(BOARD_SIZE)]
-PLAYER_BOARD = [[' '] * BOARD_SIZE for _ in range(BOARD_SIZE)]
+ENEMY_BOARD = [[' '] * BOARD_SIZE for x in range(BOARD_SIZE)]
+PLAYER_BOARD = [[' '] * BOARD_SIZE for x in range(BOARD_SIZE)]
 
-ENEMY_GUESS_BOARD = [[' '] * BOARD_SIZE for _ in range(BOARD_SIZE)]
-PLAYER_GUESS_BOARD = [[' '] * BOARD_SIZE for _ in range(BOARD_SIZE)]
+ENEMY_GUESS_BOARD = [[' '] * BOARD_SIZE for x in range(BOARD_SIZE)]
+PLAYER_GUESS_BOARD = [[' '] * BOARD_SIZE for x in range(BOARD_SIZE)]
 
-# ...
 
 def display_board(board, title):
-    # Function to display the board
+    """
+    Function to display the board
+    """
     print(f"\n{title}")
     print('  A B C D E F G H')
     print(' -----------------')
@@ -43,6 +44,7 @@ def display_board(board, title):
 letters_to_numbers = {
     'A': 0, 'B': 1, 'C': 2, 'D': 3, 'E': 4, 'F': 5, 'G': 6, 'H': 7
 }
+
 
 def get_ship_location():
     # Function to get ship location from the player
@@ -72,6 +74,7 @@ def get_ship_location():
 
     return row, column
 
+
 def place_ships(board, num_ships, title):
     # Function to place ships on the board
     for ship in range(num_ships):
@@ -83,6 +86,7 @@ def place_ships(board, num_ships, title):
         # Display the board after each ship placement
         display_board(board, title)  
 
+
 def enemy_create_ships(board):
     # Function to randomly place enemy ships on the board
     for ship in range(NUM_SHIPS):
@@ -91,9 +95,11 @@ def enemy_create_ships(board):
             ship_row, ship_column = randint(0, BOARD_SIZE - 1), randint(0, BOARD_SIZE - 1)
         board[ship_row][ship_column] = "B"
 
+
 def player_create_ships(board):
     # Function to allow the player to place their ships on the board
     place_ships(board, NUM_SHIPS, "Your Board")
+
     
 def count_ships(board):
     count = 0
@@ -103,25 +109,57 @@ def count_ships(board):
                 count += 1
     return count
 
+
 def who_plays_first():
     # Returns 'player' or 'computer' randomly to decide who starts the game
     return random.choice(['player', 'computer'])
 
-first_player = who_plays_first()
 
-if first_player == 'player':
-    print("You play first!")
-else:
-    print("Computer plays first!")
-            
+def first_player():
+    first_player = who_plays_first()
+
+    if first_player == 'player':
+        print("You play first!")
+    else:
+        print("Computer plays first!")
+
+def player_turn():
+    """
+    Player chooses a coordinate to fire at
+    If a ship is hit the location is marked with X
+    If the shot misses a O is placed
+    """ 
+    while True:
+        print("Take your shot")
+        display_board(PLAYER_GUESS_BOARD, "Guess Board")
+        row, column = get_ship_location()
+        if PLAYER_GUESS_BOARD[row][column] == "O":
+            print("You already fired at that! Pick another coordinate.")
+        elif ENEMY_BOARD[row][column] == "X":
+            print("Hit!")
+            PLAYER_GUESS_BOARD[row][column] = "X"
+            break
+        else:
+            print("Miss!")
+            PLAYER_GUESS_BOARD[row][column] = "O"
+            break
+
+
+def computer_turn():
+    """
+    Randomly generate a computer shot.
+    X = hit. O = miss.
+    """
 
 def main():
     # Main game logic functions
     enemy_create_ships(ENEMY_BOARD)
     player_create_ships(PLAYER_BOARD)
-    who_plays_first()
     count_ships(ENEMY_BOARD)
     count_ships(PLAYER_BOARD)
+    who_plays_first()
+    first_player()
+    player_turn()
     
 
 if __name__ == "__main__":
