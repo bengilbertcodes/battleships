@@ -1,6 +1,5 @@
 from colorama import Fore, Back, Style
-import random
-from random import randint
+from random import randint, random
 
 
 # Create a title for the game.
@@ -96,9 +95,6 @@ def enemy_create_ships(board):
         board[ship_row][ship_column] = "B"
 
 
-def player_create_ships(board):
-    # Function to allow the player to place their ships on the board
-    place_ships(board, NUM_SHIPS, "Your Board")
 
     
 def count_ships(board):
@@ -154,7 +150,7 @@ def computer_turn():
 def main():
     # Main game logic functions
     enemy_create_ships(ENEMY_BOARD)
-    player_create_ships(PLAYER_BOARD)
+    place_ships(PLAYER_BOARD, NUM_SHIPS, "Your Board")
     count_ships(ENEMY_BOARD)
     count_ships(PLAYER_BOARD)
     who_plays_first()
