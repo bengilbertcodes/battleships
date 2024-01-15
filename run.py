@@ -55,7 +55,7 @@ def get_ship_location():
                 break
             else:
                 # Error check to ensure a valid letter is entered by the player
-                raise ValueError("Invalid column. Please enter a valid letter between A-H")
+                raise ValueError(Fore.RED + "Invalid column. Please enter a valid letter between A-H")
         except (KeyError, ValueError) as e:
             print(f"Error: {e}")
 
@@ -67,7 +67,7 @@ def get_ship_location():
                 break
             else:
                 # error check to ensure a valid number is eneterd by the player
-                raise ValueError("Invalid Row. Please enter a number between 1 and 8")
+                raise ValueError(Fore.RED + "Invalid Row. Please enter a number between 1 and 8")
         except ValueError as e:
             print(f"Error: {e}")
 
