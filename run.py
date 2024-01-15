@@ -99,7 +99,7 @@ def count_ships(board):
     count = 0
     for row in board:
         for column in row:
-            if column == 'X':
+            if column == (Fore.RED + "X" + Fore.RESET):
                 count += 1
     return count
 
@@ -139,10 +139,6 @@ def player_turn():
             PLAYER_GUESS_BOARD[row][column] = (Fore.GREEN + "O" + Fore.RESET)
             break
         
-    if count_ships(PLAYER_GUESS_BOARD) == 5:
-        print("You destroyed all the enemy's ships! You win")
-        # call endgame function here?
-        
         
 
 def computer_turn():
@@ -154,7 +150,7 @@ def computer_turn():
         row, column = randint(0,7), randint(0,7)
         if PLAYER_BOARD[row][column] == "B":
             print("Enemy has hit your ship!")
-            ENEMY_GUESS_BOARD[row][column] = "X"
+            ENEMY_GUESS_BOARD[row][column] = (Fore.RED + "X" + Fore.RESET)
             break
         elif PLAYER_BOARD[row][column] == "O":
             computer_turn()
@@ -162,20 +158,16 @@ def computer_turn():
             computer_turn()
         else:
             print("Your enemy has missed!")
-            ENEMY_GUESS_BOARD[row][column] = "O"
+            ENEMY_GUESS_BOARD[row][column] = (Fore.GREEN + "O" + Fore.RESET)
             break
-    
-    if count_ships(ENEMY_GUESS_BOARD) == 5:
-        print("The enemy destroyed your fleet! You lose.")
-        # call endgame function here
         
         
 def main():
     # Main game logic functions
     enemy_create_ships(ENEMY_BOARD)
     place_ships(PLAYER_BOARD, NUM_SHIPS, "Your Board")
-    count_ships(ENEMY_BOARD)
-    count_ships(PLAYER_BOARD)
+    display_board(ENEMY_BOARD, "Enemy Board")
+    
     first_player()
     
     current_player = (who_plays_first)
@@ -187,6 +179,15 @@ def main():
         else:
             computer_turn()
             current_player = 'player'
+            
+    
+    # Check for game score after each turn and exits game if score is 5
+        if count_ships(PLAYER_GUESS_BOARD) == 5:
+            print("You destroyed all the enemy's ships! You win")
+            break
+        elif count_ships(ENEMY_GUESS_BOARD) == 5:
+            print("The enemy destroyed your fleet! You lose.")
+            break
     
     
 
