@@ -13,9 +13,7 @@ print('XXXX   X   X   X     X   X     XXXXX  XXXX XXXXX   X   XXXX  XXXX')
 print('X   X XXXXXXX  X     X   X     X         X X   X   X   X        X')
 print('XXXX  X     X  X     X   XXXXX XXXXX  XXXX X   X XXXXX X     XXXX')
 print('')
-print(Fore.RED + 'Welcome to Battleships')
-print('Prepare for Battle!\n')
-
+print(Fore.RED + 'Welcome to Battleships\nPrepare for Battle!')
 
 
 # Constants
@@ -105,13 +103,12 @@ def count_ships(board):
                 count += 1
     return count
 
-
 def who_plays_first():
     # Returns 'player' or 'computer' randomly to decide who starts the game
-    return random.choice(['player', 'computer'])
-
+        return random.choice(['player', 'computer'])
 
 def first_player():
+    
     first_player = who_plays_first()
 
     if first_player == 'player':
@@ -127,7 +124,9 @@ def player_turn():
     """ 
     while (count_ships(ENEMY_BOARD)) < 5:
         print("Take your shot")
-        display_board(PLAYER_GUESS_BOARD, "Guess Board")
+        display_board(PLAYER_GUESS_BOARD, "Player Guess Board")
+        print(f'"Enemy score: " {count_ships(ENEMY_GUESS_BOARD)}')
+        print(f'"Player score: " {count_ships(PLAYER_GUESS_BOARD)}')
         row, column = get_ship_location()
         if PLAYER_GUESS_BOARD[row][column] == "O":
             print("You already fired at that! Pick another coordinate.")
@@ -143,6 +142,7 @@ def player_turn():
     if count_ships(PLAYER_GUESS_BOARD) == 5:
         print("You destroyed all the enemy's ships! You win")
         # call endgame function here?
+        
         
 
 def computer_turn():
@@ -165,22 +165,29 @@ def computer_turn():
             ENEMY_GUESS_BOARD[row][column] = "O"
             break
     
-    if count_ships(PLAYER_GUESS_BOARD) == 5:
+    if count_ships(ENEMY_GUESS_BOARD) == 5:
         print("The enemy destroyed your fleet! You lose.")
         # call endgame function here
         
-
-
+        
 def main():
     # Main game logic functions
     enemy_create_ships(ENEMY_BOARD)
     place_ships(PLAYER_BOARD, NUM_SHIPS, "Your Board")
     count_ships(ENEMY_BOARD)
     count_ships(PLAYER_BOARD)
-    who_plays_first()
     first_player()
-    player_turn()
-    computer_turn()
+    
+    current_player = (who_plays_first)
+
+    while True:
+        if current_player == 'player':
+            player_turn()
+            current_player = 'computer'
+        else:
+            computer_turn()
+            current_player = 'player'
+    
     
 
 
