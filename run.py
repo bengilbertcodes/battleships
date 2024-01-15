@@ -181,12 +181,14 @@ def main():
             current_player = 'player'
             
     
-    # Check for game score after each turn and exits game if score is 5
+    # Check for game score after each turn and exits game if score is 5 and displays the winning board
         if count_ships(PLAYER_GUESS_BOARD) == 5:
             print("You destroyed all the enemy's ships! You win")
+            display_board(PLAYER_GUESS_BOARD, "Player Board")
             break
         elif count_ships(ENEMY_GUESS_BOARD) == 5:
             print("The enemy destroyed your fleet! You lose.")
+            display_board(ENEMY_GUESS_BOARD, "Enemy Guess Board")
             break
     
     
