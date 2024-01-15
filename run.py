@@ -125,18 +125,18 @@ def player_turn():
     while (count_ships(ENEMY_BOARD)) < 5:
         print("Take your shot")
         display_board(PLAYER_GUESS_BOARD, "Player Guess Board")
-        print(f'"Enemy score: " {count_ships(ENEMY_GUESS_BOARD)}')
-        print(f'"Player score: " {count_ships(PLAYER_GUESS_BOARD)}')
+        print(f'Enemy score:  {count_ships(ENEMY_GUESS_BOARD)}')
+        print(f'Player score:  {count_ships(PLAYER_GUESS_BOARD)}')
         row, column = get_ship_location()
         if PLAYER_GUESS_BOARD[row][column] == "O":
-            print("You already fired at that! Pick another coordinate.")
+            print(Fore.YELLOW + "You already fired there! Pick another coordinate.")
         elif ENEMY_BOARD[row][column] == "B":
             print("Hit!")
-            PLAYER_GUESS_BOARD[row][column] = "X"
+            PLAYER_GUESS_BOARD[row][column] = (Fore.RED + "X" + Fore.RESET)
             break
         else:
             print("Miss!")
-            PLAYER_GUESS_BOARD[row][column] = "O"
+            PLAYER_GUESS_BOARD[row][column] = (Fore.GREEN + "O" + Fore.RESET)
             break
         
     if count_ships(PLAYER_GUESS_BOARD) == 5:
