@@ -1,5 +1,7 @@
-from colorama import Fore, Back, Style
-from random import randint, random
+from colorama import Fore, Back, Style, init
+init(autoreset=True)
+import random
+from random import randint
 
 
 # Create a title for the game.
@@ -11,7 +13,7 @@ print('XXXX   X   X   X     X   X     XXXXX  XXXX XXXXX   X   XXXX  XXXX')
 print('X   X XXXXXXX  X     X   X     X         X X   X   X   X        X')
 print('XXXX  X     X  X     X   XXXXX XXXXX  XXXX X   X XXXXX X     XXXX')
 print('')
-print('Welcome to Battleships')
+print(Fore.RED + 'Welcome to Battleships')
 print('Prepare for Battle!\n')
 
 
@@ -89,14 +91,12 @@ def place_ships(board, num_ships, title):
 def enemy_create_ships(board):
     # Function to randomly place enemy ships on the board
     for ship in range(NUM_SHIPS):
-        ship_row, ship_column = randint(0, BOARD_SIZE - 1), randint(0, BOARD_SIZE - 1)
+        ship_row, ship_column = randint(0,7), randint(0,7)
         while board[ship_row][ship_column] == "B":
-            ship_row, ship_column = randint(0, BOARD_SIZE - 1), randint(0, BOARD_SIZE - 1)
+            ship_row, ship_column = randint(0,7), randint(0,7)
         board[ship_row][ship_column] = "B"
 
 
-
-    
 def count_ships(board):
     count = 0
     for row in board:
@@ -125,13 +125,13 @@ def player_turn():
     If a ship is hit the location is marked with X
     If the shot misses a O is placed
     """ 
-    while True:
+    while (count_ships(ENEMY_BOARD)) < 5:
         print("Take your shot")
         display_board(PLAYER_GUESS_BOARD, "Guess Board")
         row, column = get_ship_location()
         if PLAYER_GUESS_BOARD[row][column] == "O":
             print("You already fired at that! Pick another coordinate.")
-        elif ENEMY_BOARD[row][column] == "X":
+        elif ENEMY_BOARD[row][column] == "B":
             print("Hit!")
             PLAYER_GUESS_BOARD[row][column] = "X"
             break
@@ -139,13 +139,37 @@ def player_turn():
             print("Miss!")
             PLAYER_GUESS_BOARD[row][column] = "O"
             break
-
+        
+    if count_ships(PLAYER_GUESS_BOARD) == 5:
+        print("You destroyed all the enemy's ships! You win")
+        # call endgame function here?
+        
 
 def computer_turn():
     """
     Randomly generate a computer shot.
     X = hit. O = miss.
     """
+    while (count_ships(PLAYER_BOARD)) < 5:
+        row, column = randint(0,7), randint(0,7)
+        if PLAYER_BOARD[row][column] == "B":
+            print("Enemy has hit your ship!")
+            ENEMY_GUESS_BOARD[row][column] = "X"
+            break
+        elif PLAYER_BOARD[row][column] == "O":
+            computer_turn()
+        elif ENEMY_GUESS_BOARD[row][column] == "X":
+            computer_turn()
+        else:
+            print("Your enemy has missed!")
+            ENEMY_GUESS_BOARD[row][column] = "O"
+            break
+    
+    if count_ships(PLAYER_GUESS_BOARD) == 5:
+        print("The enemy destroyed your fleet! You lose.")
+        # call endgame function here
+        
+
 
 def main():
     # Main game logic functions
@@ -156,7 +180,8 @@ def main():
     who_plays_first()
     first_player()
     player_turn()
+    computer_turn()
     
 
-if __name__ == "__main__":
-    main()
+
+main()
