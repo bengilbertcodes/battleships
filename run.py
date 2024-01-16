@@ -7,11 +7,11 @@ from random import randint
 # Create a title for the game.
 
 print('')
-print('XXXX     X   XXXXX XXXXX X     XXXXX  XXXX X   X XXXXX XXXX  XXXX')
-print('X   X   X X    X     X   X     X      X    X   X   X   X   X X')
-print('XXXX   X   X   X     X   X     XXXXX  XXXX XXXXX   X   XXXX  XXXX')
-print('X   X XXXXXXX  X     X   X     X         X X   X   X   X        X')
-print('XXXX  X     X  X     X   XXXXX XXXXX  XXXX X   X XXXXX X     XXXX')
+print('         XXXX     X   XXXXX XXXXX X     XXXXX  XXXX X   X XXXXX XXXX  XXXX')
+print('         X   X   X X    X     X   X     X      X    X   X   X   X   X X')
+print('         XXXX   X   X   X     X   X     XXXXX  XXXX XXXXX   X   XXXX  XXXX')
+print('         X   X XXXXXXX  X     X   X     X         X X   X   X   X        X')
+print('         XXXX  X     X  X     X   XXXXX XXXXX  XXXX X   X XXXXX X     XXXX')
 print('')
 print(Fore.BLUE + "-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_")
 print("\n")
@@ -20,7 +20,9 @@ print("\r")
 
 print("    First, choose your ship locations")
 
-
+# Credit to Knowledge Maven's youtube series for help with the following functions
+# https://github.com/gbrough/battleship/blob/main/single_player.py
+# https://www.youtube.com/watch?v=tF1WRCrd_HQ&t=565s&ab_channel=KnowledgeMavens
 
 
 # Constants
@@ -33,8 +35,6 @@ PLAYER_BOARD = [[' '] * BOARD_SIZE for x in range(BOARD_SIZE)]
 ENEMY_GUESS_BOARD = [[' '] * BOARD_SIZE for x in range(BOARD_SIZE)]
 PLAYER_GUESS_BOARD = [[' '] * BOARD_SIZE for x in range(BOARD_SIZE)]
 
-# Credit to Knowledge Maven's youtube series for help with the following functions
-# https://github.com/gbrough/battleship/blob/main/single_player.py
 
 def display_board(board, title):
     """
