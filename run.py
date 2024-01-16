@@ -13,7 +13,12 @@ print('XXXX   X   X   X     X   X     XXXXX  XXXX XXXXX   X   XXXX  XXXX')
 print('X   X XXXXXXX  X     X   X     X         X X   X   X   X        X')
 print('XXXX  X     X  X     X   XXXXX XXXXX  XXXX X   X XXXXX X     XXXX')
 print('')
-print(Fore.RED + 'Welcome to Battleships\nPrepare for Battle!')
+print(Fore.YELLOW + '   Welcome to Battleships\n  Prepare for Battle!')
+print("\r")
+
+print("   First, choose your ship locations")
+
+
 
 
 # Constants
@@ -26,6 +31,8 @@ PLAYER_BOARD = [[' '] * BOARD_SIZE for x in range(BOARD_SIZE)]
 ENEMY_GUESS_BOARD = [[' '] * BOARD_SIZE for x in range(BOARD_SIZE)]
 PLAYER_GUESS_BOARD = [[' '] * BOARD_SIZE for x in range(BOARD_SIZE)]
 
+# Credit to Knowledge Maven's youtube series for help with the following functions
+# https://github.com/gbrough/battleship/blob/main/single_player.py
 
 def display_board(board, title):
     """
@@ -46,7 +53,16 @@ letters_to_numbers = {
 
 
 def get_ship_location():
-    # Function to get ship location from the player
+    """
+    User input to choose coordinates for placing ships and locating enemy
+    ships in the game
+
+    Raises:
+        ValueError: Checks to ensure user chooses values A-H or 1-8
+
+    Returns:
+        column and row data
+    """
     while True:
         try:
             column = input("Choose a column for your ship (A - H): \n").upper()
@@ -74,9 +90,16 @@ def get_ship_location():
     return row, column
 
 
-def place_ships(board, num_ships, title):
-    # Function to place ships on the board
-    for ship in range(num_ships):
+def place_ships(board, NUM_SHIPS, title):
+    """
+    Places 'B' on the PLAYER_BOARD for ship locations
+    Checks whether space is already used for a ship
+    Args:
+        board - refers to specific board
+        NUM_SHIPS (constant)
+        title - a name for the board
+    """
+    for ship in range(NUM_SHIPS):
         ship_row, ship_column = get_ship_location()
         while board[ship_row][ship_column] == "B":
             print("That location is already taken, choose another")
@@ -87,7 +110,10 @@ def place_ships(board, num_ships, title):
 
 
 def enemy_create_ships(board):
-    # Function to randomly place enemy ships on the board
+    """
+    Uses randint to choose random numbers for computer ship coordinates
+    Populates ENEMY_BOARD with 5 radomly plaaced ships
+    """
     for ship in range(NUM_SHIPS):
         ship_row, ship_column = randint(0,7), randint(0,7)
         while board[ship_row][ship_column] == "B":
@@ -96,6 +122,12 @@ def enemy_create_ships(board):
 
 
 def count_ships(board):
+    """
+    Counts the number of hits ('X') on the board.
+
+    Returns:
+        integer for count_ships
+    """
     count = 0
     for row in board:
         for column in row:
@@ -104,11 +136,15 @@ def count_ships(board):
     return count
 
 def who_plays_first():
-    # Returns 'player' or 'computer' randomly to decide who starts the game
-        return random.choice(['player', 'computer'])
+    """
+    uses random.choice to choose which player starts the game
+    """
+    return random.choice(['player', 'computer'])
 
 def first_player():
-    
+    """
+    Displays a message informing user who starts the game
+    """
     first_player = who_plays_first()
 
     if first_player == 'player':
@@ -119,8 +155,9 @@ def first_player():
 def player_turn():
     """
     Player chooses a coordinate to fire at
-    If a ship is hit the location is marked with X
-    If the shot misses a O is placed
+    If location contains ship (B) then the location on PLAYER_GUESS_BOARD is marked with X
+    If the shot misses a O is placed on PLAYER_GUESS_BOARD
+    Checks that the user hasn't already chosen that coordinate and displays message
     """ 
     while (count_ships(ENEMY_BOARD)) < 5:
         print("Take your shot")
@@ -145,6 +182,7 @@ def computer_turn():
     """
     Randomly generate a computer shot.
     X = hit. O = miss.
+    Checks to see if coordinates have already been chosen
     """
     while (count_ships(PLAYER_BOARD)) < 5:
         row, column = randint(0,7), randint(0,7)
@@ -163,7 +201,9 @@ def computer_turn():
         
         
 def main():
-    # Main game logic functions
+    """
+    Runs the game functions
+    """
     enemy_create_ships(ENEMY_BOARD)
     place_ships(PLAYER_BOARD, NUM_SHIPS, "Your Board")
     display_board(ENEMY_BOARD, "Enemy Board")
