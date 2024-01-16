@@ -13,12 +13,44 @@ print('         XXXX   X   X   X     X   X     XXXXX  XXXX XXXXX   X   XXXX  XXX
 print('         X   X XXXXXXX  X     X   X     X         X X   X   X   X        X')
 print('         XXXX  X     X  X     X   XXXXX XXXXX  XXXX X   X XXXXX X     XXXX')
 print('')
-print(Fore.BLUE + "-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_")
+print(Fore.BLUE + "-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-")
 print("\n")
-print(Fore.YELLOW + '    Welcome to Battleships\n    Prepare for Battle!')
+
+
+title_text = (Fore.YELLOW + "Welcome to Battleships\n")
+x = title_text.center(80)
+print(x)
+title_text_two = (Fore.YELLOW + "Prepare for Battle\n")
+y = title_text_two.center(80)
+print(y)
+
 print("\r")
 
-print("    First, choose your ship locations")
+input("Press any key to continue...\n")
+
+def user_options():
+    """
+    User input to choose to start the game or view the instructions
+    """
+    how_to_play = "Instructions for the game appear here..."
+    print("Press " + Fore.YELLOW + "1 " + Fore.RESET + "to play game or " + Fore.YELLOW + "2 " + Fore.RESET + "for instructions...:")
+    
+    while True:
+        choice = input("Your choice: ")
+        
+        if choice == "1":
+            print("Running the main game...")
+            # call main game functions
+            break
+        elif choice == "2":
+            # print instructions
+            print(how_to_play)
+        else:
+            print("Incorrect choice. Press 1 to play the game or 2 for instructions...")
+            
+user_options()
+
+# print("First, choose your ship locations")
 
 # Credit to Knowledge Maven's youtube series for help with the following functions
 # https://github.com/gbrough/battleship/blob/main/single_player.py
@@ -60,7 +92,7 @@ def get_ship_location():
     ships in the game
 
     Raises:
-        ValueError: Checks to ensure user chooses values A-H or 1-8
+        ValueError, KeyError: Checks to ensure user chooses values A-H or 1-8
 
     Returns:
         column and row data
