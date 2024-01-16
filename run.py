@@ -2,6 +2,7 @@ from colorama import Fore, Back, Style, init
 init(autoreset=True)
 import random
 from random import randint
+import time
 
 
 # Create a title for the game.
@@ -26,7 +27,15 @@ print(y)
 
 print("\r")
 
-input("Press any key to continue...\n")
+while True:
+    username = input("Please enter your name: ")
+    if len(username) < 3:
+        print(Fore.RED + "Username should be at least 3 characters.")
+    else:    
+        greet_username = (f"Hello, Commander {username} \n")
+        x = greet_username.center(80)
+        print(Fore.YELLOW + x)
+        break
 
 
 def user_options():
@@ -36,11 +45,11 @@ def user_options():
     
     # List containing instructions of how to play the game
     instructions = [
-        "1. Aim of the game is to destroy all of the enemy ships.",
-        "2. Choose your ships by entering 5 coordinates.\n   Letter (a-h or A-H) Number (1-8) and a comma (a1,b3,d5,g6,c8,f2)",
-        "3. Starting player is randomly chosen.",
-        "4. On your turn choose a coordinate (letter number (a5)) to fire at.",
-        "5. If you hit your board is marked 'X'. A miss is marked 'O'.",
+        "1. Aim of the game is to destroy all of the enemy ships.", ".",
+        "2. Choose your ships by entering 5 coordinates.\n   Letter (a-h or A-H) Number (1-8) and a comma (a1,b3,d5,g6,c8,f2)", ".",
+        "3. Starting player is randomly chosen.", ".",
+        "4. On your turn, choose a coordinate (letter and number (a5)) to fire at.", ".",
+        "5. If you hit a ship your board is marked 'X'. A miss is marked 'O'.", ".",
         "6. Keep playing until somone wins!"
         ]
 
@@ -51,22 +60,24 @@ def user_options():
         choice = input("Your choice: ")
         
         if choice == "1":
-            print("Running the main game...")
+            print("Running the main game...\n")
             # call main game functions
             break
         elif choice == "2":
+            
             # print instructions
             i = 0
             while i < len(instructions):
-                print(instructions[i])
+                print(Fore.CYAN + instructions[i])
                 i += 1
+                time.sleep(1)
             print("\nPress " + Fore.YELLOW + "1 " + Fore.RESET + "to play game or " + Fore.YELLOW + "2 " + Fore.RESET + "for instructions..:")
         else:
             print("Incorrect choice. Press " + Fore.YELLOW + "1 " + Fore.RESET + "to play game or " + Fore.YELLOW + "2 " + Fore.RESET + "for instructions..:")
             
 user_options()
 
-# print("First, choose your ship locations")
+print(Fore.CYAN + "First, choose your ship locations")
 
 # Credit to Knowledge Maven's youtube series for help with the following functions
 # https://github.com/gbrough/battleship/blob/main/single_player.py
@@ -284,4 +295,4 @@ def main():
     
 
 
-# main()
+main()
