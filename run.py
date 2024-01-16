@@ -28,12 +28,24 @@ print("\r")
 
 input("Press any key to continue...\n")
 
+
 def user_options():
     """
     User input to choose to start the game or view the instructions
     """
-    how_to_play = "Instructions for the game appear here..."
-    print("Press " + Fore.YELLOW + "1 " + Fore.RESET + "to play game or " + Fore.YELLOW + "2 " + Fore.RESET + "for instructions...:")
+    
+    # List containing instructions of how to play the game
+    instructions = [
+        "1. Aim of the game is to destroy all of the enemy ships.",
+        "2. Choose your ships by entering 5 coordinates.\n   Letter (a-h or A-H) Number (1-8) and a comma (a1,b3,d5,g6,c8,f2)",
+        "3. Starting player is randomly chosen.",
+        "4. On your turn choose a coordinate (letter number (a5)) to fire at.",
+        "5. If you hit your board is marked 'X'. A miss is marked 'O'.",
+        "6. Keep playing until somone wins!"
+        ]
+
+    
+    print("Press " + Fore.YELLOW + "1 " + Fore.RESET + "to play game or " + Fore.YELLOW + "2 " + Fore.RESET + "for instructions..:")
     
     while True:
         choice = input("Your choice: ")
@@ -44,9 +56,13 @@ def user_options():
             break
         elif choice == "2":
             # print instructions
-            print(how_to_play)
+            i = 0
+            while i < len(instructions):
+                print(instructions[i])
+                i += 1
+            print("\nPress " + Fore.YELLOW + "1 " + Fore.RESET + "to play game or " + Fore.YELLOW + "2 " + Fore.RESET + "for instructions..:")
         else:
-            print("Incorrect choice. Press 1 to play the game or 2 for instructions...")
+            print("Incorrect choice. Press " + Fore.YELLOW + "1 " + Fore.RESET + "to play game or " + Fore.YELLOW + "2 " + Fore.RESET + "for instructions..:")
             
 user_options()
 
@@ -268,4 +284,4 @@ def main():
     
 
 
-main()
+# main()
