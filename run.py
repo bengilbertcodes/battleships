@@ -67,25 +67,25 @@ def get_ship_location():
     """
     while True:
         try:
-            column = input("    Choose a column for your ship (A - H): \n").upper()
+            column = input("Choose a column for your ship (A - H): \n").upper()
             if column in 'ABCDEFGH':
                 column = letters_to_numbers[column]
                 break
             else:
                 # Error check to ensure a valid letter is entered by the player
-                raise ValueError(Fore.RED + "   Invalid column. Please enter a valid letter between A-H")
+                raise ValueError(Fore.RED + "Invalid column. Please enter a valid letter between A-H")
         except (KeyError, ValueError) as e:
             print(f"Error: {e}")
 
     while True:
         try:
-            row = input("   Choose the row for your ship (1-8): \n")
+            row = input("Choose the row for your ship (1-8): \n")
             if row in "12345678":
                 row = int(row) - 1
                 break
             else:
                 # error check to ensure a valid number is eneterd by the player
-                raise ValueError(Fore.RED + "   Invalid Row. Please enter a number between 1 and 8")
+                raise ValueError(Fore.RED + "Invalid Row. Please enter a number between 1 and 8")
         except ValueError as e:
             print(f"Error: {e}")
 
@@ -104,7 +104,7 @@ def place_ships(board, NUM_SHIPS, title):
     for ship in range(NUM_SHIPS):
         ship_row, ship_column = get_ship_location()
         while board[ship_row][ship_column] == "B":
-            print(" That location is already taken, choose another")
+            print("That location is already taken, choose another")
             ship_row, ship_column = get_ship_location()
         board[ship_row][ship_column] = "B"
         # Display the board after each ship placement
@@ -164,17 +164,17 @@ def player_turn():
     while (count_ships(ENEMY_BOARD)) < 5:
         print("Take your shot")
         display_board(PLAYER_GUESS_BOARD, "Player Guess Board")
-        print(f'    Enemy score:  {count_ships(ENEMY_GUESS_BOARD)}')
-        print(f'    Player score:  {count_ships(PLAYER_GUESS_BOARD)}')
+        print(f'Enemy score:  {count_ships(ENEMY_GUESS_BOARD)}')
+        print(f'Player score:  {count_ships(PLAYER_GUESS_BOARD)}')
         row, column = get_ship_location()
         if PLAYER_GUESS_BOARD[row][column] == "O":
             print(Fore.YELLOW + "    You already fired there! Pick another coordinate.")
         elif ENEMY_BOARD[row][column] == "B":
-            print("    Hit!")
+            print("    HIT!")
             PLAYER_GUESS_BOARD[row][column] = (Fore.RED + "X" + Fore.RESET)
             break
         else:
-            print("    Miss!")
+            print("    MISS!")
             PLAYER_GUESS_BOARD[row][column] = (Fore.GREEN + "O" + Fore.RESET)
             break
         
@@ -189,7 +189,7 @@ def computer_turn():
     while (count_ships(PLAYER_BOARD)) < 5:
         row, column = randint(0,7), randint(0,7)
         if PLAYER_BOARD[row][column] == "B":
-            print("    Enemy has hit your ship!")
+            print("    Enemy has HIT your ship!")
             ENEMY_GUESS_BOARD[row][column] = (Fore.RED + "X" + Fore.RESET)
             break
         elif PLAYER_BOARD[row][column] == "O":
@@ -197,7 +197,7 @@ def computer_turn():
         elif ENEMY_GUESS_BOARD[row][column] == "X":
             computer_turn()
         else:
-            print("    The enemy has missed!")
+            print("    The enemy has MISSED!")
             ENEMY_GUESS_BOARD[row][column] = (Fore.GREEN + "O" + Fore.RESET)
             break
         
