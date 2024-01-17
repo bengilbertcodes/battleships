@@ -268,13 +268,8 @@ def take_shot():
 
         if update_player_shot in tuple_coordinates_list:
             print(f"{player_shot} is valid")
-            print("Good to go")
         else:
             print("Input not valid")
-            print("Still broken")
-            
-        print(player_shot)    
-        print(update_player_shot)
         
         display_board(PLAYER_GUESS_BOARD, "Player Guess Board")
         print(f'Enemy score:  {count_ships(ENEMY_GUESS_BOARD)}')
