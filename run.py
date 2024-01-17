@@ -27,8 +27,12 @@ print(y)
 
 print("\r")
 
-while True:
+
+username = input("Please enter your name: ")
+while not username.isalpha():
+    print(Fore.RED + "Invalid characters in username. Only use letters (aA-zZ)")
     username = input("Please enter your name: ")
+while True:
     if len(username) < 3:
         print(Fore.RED + "Username should be at least 3 characters.")
     else:    
@@ -75,7 +79,7 @@ def user_options():
         else:
             print("Incorrect choice. Press " + Fore.YELLOW + "1 " + Fore.RESET + "to play game or " + Fore.YELLOW + "2 " + Fore.RESET + "for instructions..:")
             
-user_options()
+# user_options()
 
 print(Fore.CYAN + "First, choose your ship locations. \n")
 
@@ -154,26 +158,6 @@ def get_ship_location():
 def player_place_ships():
     x = input(Fore.CYAN + "Enter five coordinates separated by a space (a1 b2 c3 d4 f5): " + Fore.RESET)
     coords_list = x.split(" ")
-    
-    column = []
-    row = []
-    
-    for coord in coords_list:
-        if coord[:-1].upper() and coord[-1].isdigit():
-            column.append(coord[:-1].upper())
-            row.append(int(coord[-1]))
-        else:
-            print(f"Invalid coordinate: {coord}. Please enter valid coordinates.")
-            return
-
-    print("column: ", column)
-    print("Row: ", row)
-    
-    for x in column:
-        if column in letters_to_numbers:
-            column = letters_to_numbers(column)
-    
-    print("Update column to integers: ", column)
     
 
 player_place_ships()
