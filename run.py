@@ -226,7 +226,6 @@ def coordinates():
     return tuple_coordinates_list
 
 tuple_coordinates_list = coordinates()
-print(tuple_coordinates_list)
 
 
 def valid_coordinates():
@@ -246,7 +245,6 @@ def valid_coordinates():
     return list_of_coordinates
     
 list_of_coordinates = valid_coordinates()
-print(list_of_coordinates)
 
 
 def is_valid_input(user_input):
