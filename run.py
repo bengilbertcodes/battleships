@@ -80,7 +80,7 @@ def user_options():
         else:
             print("Incorrect choice. Press " + Fore.YELLOW + "1 " + Fore.RESET + "to play game or " + Fore.YELLOW + "2 " + Fore.RESET + "for instructions..:")
             
-# user_options()
+user_options()
 
 print(Fore.CYAN + "First, choose your ship locations. \n")
 
@@ -212,37 +212,6 @@ cpu_coords = cpu_place_ships()
 print("CPU Coordinates:", cpu_coords)
 
 
-def place_ships(board, NUM_SHIPS, title):
-    """
-    Places 'B' on the PLAYER_BOARD for ship locations
-    Checks whether space is already used for a ship
-    Args:
-        board - refers to specific board
-        NUM_SHIPS (constant)
-        title - a name for the board
-    """
-    for ship in range(NUM_SHIPS):
-        ship_row, ship_column = get_ship_location()
-        while board[ship_row][ship_column] == "B":
-            print("That location is already taken, choose another")
-            ship_row, ship_column = get_ship_location()
-        board[ship_row][ship_column] = "B"
-        # Display the board after each ship placement
-        display_board(board, title)  
-
-
-def enemy_create_ships(board):
-    """
-    Uses randint to choose random numbers for computer ship coordinates
-    Populates ENEMY_BOARD with 5 radomly plaaced ships
-    """
-    for ship in range(NUM_SHIPS):
-        ship_row, ship_column = randint(0,7), randint(0,7)
-        while board[ship_row][ship_column] == "B":
-            ship_row, ship_column = randint(0,7), randint(0,7)
-        board[ship_row][ship_column] = "B"
-
-
 def count_ships(board):
     """
     Counts the number of hits ('X') on the board.
@@ -326,8 +295,6 @@ def main():
     """
     Runs the game functions
     """
-    enemy_create_ships(ENEMY_BOARD)
-    place_ships(PLAYER_BOARD, NUM_SHIPS, "   Your Board")
     display_board(ENEMY_BOARD, "   Enemy Board")
     
     first_player()
@@ -356,4 +323,4 @@ def main():
     
 
 
-# main()
+main()
