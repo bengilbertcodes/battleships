@@ -111,6 +111,22 @@ for x in range(BOARD_SIZE):
 
 print(coordinates)
 
+def valid_coordinates():
+    """
+    List of valid coordinates to check against user input. 
+    Ensuring only correct values can be entered
+    """
+    valid_coordinates = []
+    
+    for i in range(8):
+        row = []
+        for j in range(8):
+            square = chr(ord('a') + j) + str(i + 1)
+            row.append(square)
+        valid_coordinates.append(row)
+        
+    return valid_coordinates()
+
 
 def display_board(board, title):
     """
