@@ -101,32 +101,6 @@ PLAYER_BOARD = [[' '] * BOARD_SIZE for x in range(BOARD_SIZE)]
 ENEMY_GUESS_BOARD = [[' '] * BOARD_SIZE for x in range(BOARD_SIZE)]
 PLAYER_GUESS_BOARD = [[' '] * BOARD_SIZE for x in range(BOARD_SIZE)]
 
-# Creates a list of coordinates.
-# Code based on https://stackoverflow.com/questions/18817207/use-python-to-create-2d-coordinate
-coordinates = []
-
-for x in range(BOARD_SIZE):
-    for y in range(1, 9):
-        coordinates.append((x, y))
-
-print(coordinates)
-
-def valid_coordinates():
-    """
-    List of valid coordinates to check against user input. 
-    Ensuring only correct values can be entered
-    """
-    valid_coordinates = []
-    
-    for i in range(8):
-        row = []
-        for j in range(8):
-            square = chr(ord('a') + j) + str(i + 1)
-            row.append(square)
-        valid_coordinates.append(row)
-        
-    return valid_coordinates()
-
 
 def display_board(board, title):
     """
@@ -232,68 +206,81 @@ def player_shot_to_coordinates(user_input):
     returns coordinate to reference coordinates list
     """
     column_letter = user_input[0].upper()  
-    row = int(user_input[1:]) - 1
+    row = int(user_input[1:])
 
     # Convert the letter to a corresponding index
     column = ord(column_letter) - ord('A')
 
     return column, row
 
+
+# Creates a list of coordinates.
+# Code based on https://stackoverflow.com/questions/18817207/use-python-to-create-2d-coordinate
+def coordinates():
+    tuple_coordinates_list = []
+
+    for x in range(BOARD_SIZE):
+        for y in range(1, 9):
+            tuple_coordinates_list.append((x, y))
+
+    return tuple_coordinates_list
+
+tuple_coordinates_list = coordinates()
+print(tuple_coordinates_list)
+
+
+def valid_coordinates():
+    """
+    List of valid coordinates to check against user input. 
+    Ensuring only correct values can be entered
+    """
+    list_of_coordinates = []
+    
+    for i in range(8):
+        row = []
+        for j in range(8):
+            square = chr(ord('a') + j) + str(i + 1)
+            row.append(square)
+        list_of_coordinates.append(row)
+        
+    return list_of_coordinates
+    
+list_of_coordinates = valid_coordinates()
+print(list_of_coordinates)
+
+
+def is_valid_input(user_input):
+    if len(user_input) == 2 and user_input[0].isalpha() and user_input[1].isdigit():
+        return True
+    return False
+
+
 def take_shot():
     while (count_ships(ENEMY_BOARD)) < 5:
         player_shot = input("Take aim! Please enter a coordinate (eg a1): ")
-        print(player_shot)
-        print(player_shot_to_coordinates(player_shot))
+        player_shot = player_shot.upper()
+        
+        if not is_valid_input(player_shot):
+            print("Invalid input format. Please enter a valid coordinate.")
+            continue
+
+        update_player_shot = player_shot_to_coordinates(player_shot)
+
+        if update_player_shot in tuple_coordinates_list:
+            print(f"{player_shot} is valid")
+            print("Good to go")
+        else:
+            print("Input not valid")
+            print("Still broken")
+            
+        print(player_shot)    
+        print(update_player_shot)
+        
         display_board(PLAYER_GUESS_BOARD, "Player Guess Board")
         print(f'Enemy score:  {count_ships(ENEMY_GUESS_BOARD)}')
         print(f'Player score:  {count_ships(PLAYER_GUESS_BOARD)}')
     
 take_shot()
-
-def player_turn():
-    """
-    Player chooses a coordinate to fire at
-    If location contains ship (B) then the location on PLAYER_GUESS_BOARD is marked with X
-    If the shot misses a O is placed on PLAYER_GUESS_BOARD
-    Checks that the user hasn't already chosen that coordinate and displays message
-    """ 
-    take_shot()
-    while (count_ships(ENEMY_BOARD)) < 5:
-        row, column = take_shot()
-        if PLAYER_GUESS_BOARD[row][column] == "O":
-            print(Fore.YELLOW + "    You already fired there! Pick another coordinate.")
-        elif ENEMY_BOARD[row][column] == "B":
-            print("    HIT!")
-            PLAYER_GUESS_BOARD[row][column] = (Fore.RED + "X" + Fore.RESET)
-            break
-        else:
-            print("    MISS!")
-            PLAYER_GUESS_BOARD[row][column] = (Fore.GREEN + "O" + Fore.RESET)
-            break
-        
-        
-
-def computer_turn():
-    """
-    Randomly generate a computer shot.
-    X = hit. O = miss.
-    Checks to see if coordinates have already been chosen
-    """
-    while (count_ships(PLAYER_BOARD)) < 5:
-        row, column = randint(0,7), randint(0,7)
-        if PLAYER_BOARD[row][column] == "B":
-            print("    Enemy has HIT your ship!")
-            ENEMY_GUESS_BOARD[row][column] = (Fore.RED + "X" + Fore.RESET)
-            break
-        elif PLAYER_BOARD[row][column] == "O":
-            computer_turn()
-        elif ENEMY_GUESS_BOARD[row][column] == "X":
-            computer_turn()
-        else:
-            print("    The enemy has MISSED!")
-            ENEMY_GUESS_BOARD[row][column] = (Fore.GREEN + "O" + Fore.RESET)
-            break
-        
         
 def main():
     """
@@ -315,13 +302,13 @@ def main():
             os.system('clear')
             create_title()
             print(Fore.CYAN + f"{username}'s turn: ")
-            player_turn()
+            # player_turn()
             current_player = 'computer'
         else:
             os.system('clear')
             create_title()
             print(Fore.CYAN + "Enemy's turn: ")
-            computer_turn()
+            # computer_turn()
             current_player = 'player'
             
     
