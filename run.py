@@ -210,15 +210,29 @@ def first_player():
     else:
         print("    Computer plays first!")
 
+def player_shot_to_coordinates(user_input):
+    """
+    Takes user input eg. a1, changes letter to number
+    returns coordinate to reference coordinates list
+    """
+    column_letter = user_input[0].upper()  
+    row = int(user_input[1:]) - 1
+
+    # Convert the letter to a corresponding index
+    column = ord(column_letter) - ord('A')
+
+    return column, row
 
 def take_shot():
     while (count_ships(ENEMY_BOARD)) < 5:
         player_shot = input("Take aim! Please enter a coordinate (eg a1): ")
         print(player_shot)
+        print(player_shot_to_coordinates(player_shot))
         display_board(PLAYER_GUESS_BOARD, "Player Guess Board")
         print(f'Enemy score:  {count_ships(ENEMY_GUESS_BOARD)}')
         print(f'Player score:  {count_ships(PLAYER_GUESS_BOARD)}')
     
+take_shot()
 
 def player_turn():
     """
