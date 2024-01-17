@@ -4,20 +4,22 @@ import random
 from random import randint
 import time
 import re
+import os
 
 
 # Create a title for the game.
+def create_title():
+    print('')
+    print('         XXXX     X   XXXXX XXXXX X     XXXXX  XXXX X   X XXXXX XXXX  XXXX')
+    print('         X   X   X X    X     X   X     X      X    X   X   X   X   X X')
+    print('         XXXX   X   X   X     X   X     XXXXX  XXXX XXXXX   X   XXXX  XXXX')
+    print('         X   X XXXXXXX  X     X   X     X         X X   X   X   X        X')
+    print('         XXXX  X     X  X     X   XXXXX XXXXX  XXXX X   X XXXXX X     XXXX')
+    print('')
+    print(Fore.BLUE + "-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-")
+    print("\n")
 
-print('')
-print('         XXXX     X   XXXXX XXXXX X     XXXXX  XXXX X   X XXXXX XXXX  XXXX')
-print('         X   X   X X    X     X   X     X      X    X   X   X   X   X X')
-print('         XXXX   X   X   X     X   X     XXXXX  XXXX XXXXX   X   XXXX  XXXX')
-print('         X   X XXXXXXX  X     X   X     X         X X   X   X   X        X')
-print('         XXXX  X     X  X     X   XXXXX XXXXX  XXXX X   X XXXXX X     XXXX')
-print('')
-print(Fore.BLUE + "-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-")
-print("\n")
-
+create_title()
 
 title_text = (Fore.YELLOW + "Welcome to Battleships\n")
 x = title_text.center(80)
@@ -117,45 +119,6 @@ letters_to_numbers = {
     'A': 0, 'B': 1, 'C': 2, 'D': 3, 'E': 4, 'F': 5, 'G': 6, 'H': 7
 }
 
-
-def get_ship_location():
-    """
-    User input to choose coordinates for placing ships and locating enemy
-    ships in the game.
-    Creates a list of coordinates from the input data
-
-    Raises:
-        ValueError, KeyError: Checks to ensure user chooses values A-H or 1-8
-
-    Returns:
-        column and row data
-    """
-    while True:
-        try:
-            column = input("Choose a column for your ship (A - H): \n").upper()
-            if column in 'ABCDEFGH':
-                column = letters_to_numbers[column]
-                break
-            else:
-                # Error check to ensure a valid letter is entered by the player
-                raise ValueError(Fore.RED + "Invalid column. Please enter a valid letter between A-H")
-        except (KeyError, ValueError) as e:
-            print(f"Error: {e}")
-
-    while True:
-        try:
-            row = input("Choose the row for your ship (1-8): \n")
-            if row in "12345678":
-                row = int(row) - 1
-                break
-            else:
-                # error check to ensure a valid number is eneterd by the player
-                raise ValueError(Fore.RED + "Invalid Row. Please enter a number between 1 and 8")
-        except ValueError as e:
-            print(f"Error: {e}")
-
-    return row, column
-
 def validate_coords(coords_list):
     # Define the pattern for the "a1" format (a letter followed by a digit)
     pattern = re.compile(r'^[a-zA-Z]\d$')
@@ -243,6 +206,12 @@ def first_player():
     else:
         print("    Computer plays first!")
 
+
+def take_shot():
+    player_shot = input("Take aim! Please enter a coordinate (eg a1): ")
+    print(player_shot)
+    
+
 def player_turn():
     """
     Player chooses a coordinate to fire at
@@ -250,12 +219,13 @@ def player_turn():
     If the shot misses a O is placed on PLAYER_GUESS_BOARD
     Checks that the user hasn't already chosen that coordinate and displays message
     """ 
+    take_shot()
     while (count_ships(ENEMY_BOARD)) < 5:
         print("Take your shot")
         display_board(PLAYER_GUESS_BOARD, "Player Guess Board")
         print(f'Enemy score:  {count_ships(ENEMY_GUESS_BOARD)}')
         print(f'Player score:  {count_ships(PLAYER_GUESS_BOARD)}')
-        row, column = get_ship_location()
+        row, column = take_shot()
         if PLAYER_GUESS_BOARD[row][column] == "O":
             print(Fore.YELLOW + "    You already fired there! Pick another coordinate.")
         elif ENEMY_BOARD[row][column] == "B":
@@ -295,7 +265,6 @@ def main():
     """
     Runs the game functions
     """
-    display_board(ENEMY_BOARD, "   Enemy Board")
     
     first_player()
     
@@ -303,9 +272,15 @@ def main():
 
     while True:
         if current_player == 'player':
+            os.system('clear')
+            create_title()
+            print(Fore.CYAN + f"{username}'s turn: ")
             player_turn()
             current_player = 'computer'
         else:
+            os.system('clear')
+            create_title()
+            print(Fore.CYAN + "Enemy's turn: ")
             computer_turn()
             current_player = 'player'
             
