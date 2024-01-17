@@ -82,9 +82,6 @@ def user_options():
         else:
             print("Incorrect choice. Press " + Fore.YELLOW + "1 " + Fore.RESET + "to play game or " + Fore.YELLOW + "2 " + Fore.RESET + "for instructions..:")
             
-# user_options()
-
-# print(Fore.CYAN + "First, choose your ship locations. \n")
 
 # Credit to Knowledge Maven's youtube series for help with the following functions
 # https://github.com/gbrough/battleship/blob/main/single_player.py
@@ -119,6 +116,7 @@ letters_to_numbers = {
     'A': 0, 'B': 1, 'C': 2, 'D': 3, 'E': 4, 'F': 5, 'G': 6, 'H': 7
 }
 
+
 def validate_coords(coords_list):
     # Define the pattern for the "a1" format (a letter followed by a digit)
     pattern = re.compile(r'^[a-zA-Z]\d$')
@@ -130,6 +128,7 @@ def validate_coords(coords_list):
     
     # If all elements match the pattern, return True
     return True
+
 
 def player_place_ships():
     """
@@ -183,11 +182,13 @@ def count_ships(board):
                 count += 1
     return count
 
+
 def who_plays_first():
     """
     uses random.choice to choose which player starts the game
     """
     return random.choice(['player', 'computer'])
+
 
 def first_player():
     """
@@ -199,6 +200,7 @@ def first_player():
         print("    You play first!")
     else:
         print("    Computer plays first!")
+
 
 def player_shot_to_coordinates(user_input):
     """
@@ -273,22 +275,26 @@ def take_shot():
         print(f'Enemy score:  {count_ships(ENEMY_GUESS_BOARD)}')
         print(f'Player score:  {count_ships(PLAYER_GUESS_BOARD)}')
     
-take_shot()
         
 def main():
     """
     Runs the game functions
     """
-    
-    first_player()
-    
-    current_player = (who_plays_first)
+    user_options()
+
+    print(Fore.CYAN + "First, choose your ship locations. \n")
     
     player_coords = player_place_ships()
     print("Player Coordinates:", player_coords)
 
     cpu_coords = cpu_place_ships()
     print("CPU Coordinates:", cpu_coords)
+    
+    first_player()
+    
+    current_player = (who_plays_first)
+    
+    take_shot()
 
     while True:
         if current_player == 'player':
@@ -304,7 +310,6 @@ def main():
             # computer_turn()
             current_player = 'player'
             
-    
     # Check for game score after each turn and exits game if score is 5 and displays the winning board
         if count_ships(PLAYER_GUESS_BOARD) == 5:
             print("    You destroyed all the enemy's ships! You win")
@@ -318,4 +323,4 @@ def main():
     
 
 
-# main()
+main()
