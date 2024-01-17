@@ -180,12 +180,13 @@ def player_place_ships():
     check_list = validate_coords(player_coords_list)
     
     if len(player_coords_list) != 5:
-        print("Incorrect number of coordinates entered. Please enter 5 coordinates...")
-        player_place_ships()
+        print(Fore.RED + "Incorrect number of coordinates entered. Please enter 5 coordinates...")
+        return player_place_ships()
     elif check_list:
-        print("All coords match required format")
+        print(Fore.GREEN + "All coords match required format")
     else:
-        print("Not all coords match required format")
+        print(Fore.RED + "Not all coords match required format (letter and number (a1)")
+        return player_place_ships()
         
     return player_coords_list
 
@@ -203,11 +204,12 @@ def cpu_place_ships():
         cpu_coords_list.append(letter + str(digit))
 
     return cpu_coords_list
-    
-player_place_ships()
-cpu_place_ships()
-print(cpu_place_ships())
-print(player_place_ships())
+
+player_coords = player_place_ships()
+print("Player Coordinates:", player_coords)
+
+cpu_coords = cpu_place_ships()
+print("CPU Coordinates:", cpu_coords)
 
 
 def place_ships(board, NUM_SHIPS, title):
