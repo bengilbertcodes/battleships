@@ -82,9 +82,9 @@ def user_options():
         else:
             print("Incorrect choice. Press " + Fore.YELLOW + "1 " + Fore.RESET + "to play game or " + Fore.YELLOW + "2 " + Fore.RESET + "for instructions..:")
             
-user_options()
+# user_options()
 
-print(Fore.CYAN + "First, choose your ship locations. \n")
+# print(Fore.CYAN + "First, choose your ship locations. \n")
 
 # Credit to Knowledge Maven's youtube series for help with the following functions
 # https://github.com/gbrough/battleship/blob/main/single_player.py
@@ -100,6 +100,16 @@ PLAYER_BOARD = [[' '] * BOARD_SIZE for x in range(BOARD_SIZE)]
 
 ENEMY_GUESS_BOARD = [[' '] * BOARD_SIZE for x in range(BOARD_SIZE)]
 PLAYER_GUESS_BOARD = [[' '] * BOARD_SIZE for x in range(BOARD_SIZE)]
+
+# Creates a list of coordinates.
+# Code based on https://stackoverflow.com/questions/18817207/use-python-to-create-2d-coordinate
+coordinates = []
+
+for x in range(BOARD_SIZE):
+    for y in range(1, 9):
+        coordinates.append((x, y))
+
+print(coordinates)
 
 
 def display_board(board, title):
@@ -168,12 +178,6 @@ def cpu_place_ships():
 
     return cpu_coords_list
 
-player_coords = player_place_ships()
-print("Player Coordinates:", player_coords)
-
-cpu_coords = cpu_place_ships()
-print("CPU Coordinates:", cpu_coords)
-
 
 def count_ships(board):
     """
@@ -208,8 +212,12 @@ def first_player():
 
 
 def take_shot():
-    player_shot = input("Take aim! Please enter a coordinate (eg a1): ")
-    print(player_shot)
+    while (count_ships(ENEMY_BOARD)) < 5:
+        player_shot = input("Take aim! Please enter a coordinate (eg a1): ")
+        print(player_shot)
+        display_board(PLAYER_GUESS_BOARD, "Player Guess Board")
+        print(f'Enemy score:  {count_ships(ENEMY_GUESS_BOARD)}')
+        print(f'Player score:  {count_ships(PLAYER_GUESS_BOARD)}')
     
 
 def player_turn():
@@ -221,10 +229,6 @@ def player_turn():
     """ 
     take_shot()
     while (count_ships(ENEMY_BOARD)) < 5:
-        print("Take your shot")
-        display_board(PLAYER_GUESS_BOARD, "Player Guess Board")
-        print(f'Enemy score:  {count_ships(ENEMY_GUESS_BOARD)}')
-        print(f'Player score:  {count_ships(PLAYER_GUESS_BOARD)}')
         row, column = take_shot()
         if PLAYER_GUESS_BOARD[row][column] == "O":
             print(Fore.YELLOW + "    You already fired there! Pick another coordinate.")
@@ -269,6 +273,12 @@ def main():
     first_player()
     
     current_player = (who_plays_first)
+    
+    player_coords = player_place_ships()
+    print("Player Coordinates:", player_coords)
+
+    cpu_coords = cpu_place_ships()
+    print("CPU Coordinates:", cpu_coords)
 
     while True:
         if current_player == 'player':
@@ -298,4 +308,4 @@ def main():
     
 
 
-main()
+# main()
