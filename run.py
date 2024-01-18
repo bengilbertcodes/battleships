@@ -161,14 +161,18 @@ def cpu_place_ships():
     Randonly create a list of 5 coordinates for computer ships.
     """
     letters = "abcdefgh"
-    cpu_coords_list = []
+    cpu_coords_list = set()
     
-    for _ in range(5):
+    while len(cpu_coords_list) < 5:
         letter = random.choice(letters)
-        digit = random.randint(1, 8)
-        cpu_coords_list.append(letter + str(digit))
+        digit = random.randint(1, 9)
+        new_coord = letter + str(digit)
+        
+        # Check if the coordinate is already in the set
+        if new_coord not in cpu_coords_list:
+            cpu_coords_list.add(new_coord)
 
-    return cpu_coords_list
+    return list(cpu_coords_list)
 
 
 def count_ships(board):
@@ -281,15 +285,14 @@ useable_coordinate = take_shot()
 print(useable_coordinate)
 
 def player_turn():
-    row = 1
-    column = 3
-    
-    if PLAYER_GUESS_BOARD[row][column] == "O":
+    column, row = useable_coordinate
+    print(column, row)
+    if PLAYER_GUESS_BOARD[column][row] == "O":
         print("You already tried that one")
     else:
         print("Hit!")
-        PLAYER_GUESS_BOARD[row][column] = (Fore.RED + "X" + Fore.RESET)
-        display_board(PLAYER_GUESS_BOARD, f"    {username}'s Board")
+        PLAYER_GUESS_BOARD[column][row] = (Fore.RED + "X" + Fore.RESET)
+        display_board(PLAYER_GUESS_BOARD, f"    {username}'s Guess Board")
 
 
 def main():
