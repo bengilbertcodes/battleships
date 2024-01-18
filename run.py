@@ -281,6 +281,7 @@ def player_turn():
         print(take_shot(), "Useable coordinate")
         row, column = take_shot()
         print(row, column)
+        display_board(PLAYER_GUESS_BOARD, "    {username} Board")
 
 def main():
     """
