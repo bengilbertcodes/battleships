@@ -98,6 +98,9 @@ PLAYER_BOARD = [[' '] * BOARD_SIZE for x in range(BOARD_SIZE)]
 ENEMY_GUESS_BOARD = [[' '] * BOARD_SIZE for x in range(BOARD_SIZE)]
 PLAYER_GUESS_BOARD = [[' '] * BOARD_SIZE for x in range(BOARD_SIZE)]
 
+cpu_coords = []
+player_shots = []
+
 
 def display_board(board, title):
     """
@@ -225,7 +228,7 @@ def player_shot_to_coordinates(user_input):
 
 # Creates a list of coordinates.
 # Code based on https://stackoverflow.com/questions/18817207/use-python-to-create-2d-coordinate
-def coordinates():
+# def coordinates():
     tuple_coordinates_list = []
 
     for x in range(BOARD_SIZE):
@@ -234,7 +237,7 @@ def coordinates():
 
     return tuple_coordinates_list
 
-tuple_coordinates_list = coordinates()
+# tuple_coordinates_list = coordinates()
 
 
 def valid_coordinates():
@@ -245,12 +248,9 @@ def valid_coordinates():
     list_of_coordinates = []
     
     for i in range(8):
-        row = []
         for j in range(8):
             square = chr(ord('a') + j) + str(i + 1)
-            row.append(square)
-        list_of_coordinates.append(row)
-        
+            list_of_coordinates.append(square)
     return list_of_coordinates
     
 list_of_coordinates = valid_coordinates()
@@ -262,38 +262,49 @@ def is_valid_input(user_input):
     return False
 
 
+def checkHit(coordinate):
+    if coordinate in cpu_coords:
+        print("Hit")
+        return True
+    else:
+        print("Miss")
+        return False
+
+
 def take_shot():
-    while (count_ships(ENEMY_BOARD)) < 5:
-        player_shot = input("Take aim! Please enter a coordinate (eg a1): ")
-        player_shot = player_shot.upper()
+    player_shot = input("Take aim! Please enter a coordinate (eg a1): ")
+    if not player_shot in list_of_coordinates:
+        player_shot = input("Invalid input format. Please enter a valid coordinate: ")
         
-        if not is_valid_input(player_shot):
-            print("Invalid input format. Please enter a valid coordinate.")
-            continue
+    return player_shot
+
+
+def edit_player_shot():
         
-        update_player_shot = player_shot_to_coordinates(player_shot)
-        
-        if update_player_shot in tuple_coordinates_list:
-            print(f"{player_shot} is valid")
-            break
-        else:
-            print("Input not valid")
-            
+    update_player_shot = player_shot_to_coordinates(p_shot)
+
     return update_player_shot
 
-# useable_coordinate = take_shot()
-# print(useable_coordinate)
+p_shot = take_shot()
+update_p_shot = edit_player_shot()
+
+# print(p_shot)
+# print(update_p_shot)
 
 def player_turn():
-    useable_coordinate = take_shot()
-    column, row = useable_coordinate
-    print(column, row)
-    if PLAYER_GUESS_BOARD[row][column] == "O":
-        print("You already tried that one")
-    else:
-        print("Hit!")
-        PLAYER_GUESS_BOARD[row - 1][column] = (Fore.RED + "X" + Fore.RESET)
-        display_board(PLAYER_GUESS_BOARD, f"    {username}'s Guess Board")
+    # while True:
+        column, row = update_p_shot
+        if PLAYER_GUESS_BOARD[row - 1][column] == "O":
+            print("You already tried that one")
+        elif p_shot in cpu_coords:
+            print("Hit!")
+            PLAYER_GUESS_BOARD[row - 1][column] = (Fore.RED + "X" + Fore.RESET)
+            display_board(PLAYER_GUESS_BOARD, (Fore.CYAN + f" {username}'s Guess Board"))
+        else:
+            print("Miss")
+            PLAYER_GUESS_BOARD[row - 1][column] = (Fore.GREEN + "O" + Fore.RESET)
+            display_board(PLAYER_GUESS_BOARD, (Fore.CYAN + f" {username}'s Guess Board"))
+            
 
 
 def main():
@@ -313,9 +324,7 @@ def main():
     first_player()
     
     current_player = (who_plays_first)
-    
-    take_shot()
-    
+        
     player_turn()
     
     # while True:
