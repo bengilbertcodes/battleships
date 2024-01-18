@@ -306,6 +306,15 @@ def player_turn():
             display_board(PLAYER_GUESS_BOARD, (Fore.CYAN + f" {username}'s Guess Board"))
             
 
+def computer_turn():
+    """
+    Generate random coordinate.
+    Check against player_coords list.
+    If match is true = HIT else Miss
+    Add coordinate to list of tried coordinates to avoid repeats
+    """
+            
+
 
 def main():
     """
