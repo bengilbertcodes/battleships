@@ -125,6 +125,9 @@ def validate_coords(coords_list):
     for element in coords_list:
         if not pattern.match(element):
             return False
+        
+    if len(set(coords_list)) != len(coords_list):
+        return False
     
     # If all elements match the pattern, return True
     return True
@@ -141,11 +144,11 @@ def player_place_ships():
     
     check_list = validate_coords(player_coords_list)
     
-    if len(player_coords_list) != 5:
-        print(Fore.RED + "Incorrect number of coordinates entered. Please enter 5 coordinates...")
+    if len(player_coords_list) != 5 or not check_list:
+        print(Fore.RED + "Incorrect coordinates entered. Please enter 5 unique coordinates...")
         return player_place_ships()
     elif check_list:
-        print(Fore.GREEN + "All coords match required format")
+        print(Fore.GREEN + "All coordinates match required format")
     else:
         print(Fore.RED + "Not all coords match required format (letter and number (a1)")
         return player_place_ships()
@@ -263,30 +266,33 @@ def take_shot():
         if not is_valid_input(player_shot):
             print("Invalid input format. Please enter a valid coordinate.")
             continue
-
+        
         update_player_shot = player_shot_to_coordinates(player_shot)
-
+        
         if update_player_shot in tuple_coordinates_list:
             print(f"{player_shot} is valid")
         else:
             print("Input not valid")
-        
-        display_board(PLAYER_GUESS_BOARD, "Player Guess Board")
-        print(f'Enemy score:  {count_ships(ENEMY_GUESS_BOARD)}')
-        print(f'Player score:  {count_ships(PLAYER_GUESS_BOARD)}')
-    
-        
+            
+    return update_player_shot
+
+def player_turn():
+    while cpu_place_ships < 5:
+        print(take_shot(), "Useable coordinate")
+        row, column = take_shot()
+        print(row, column)
+
 def main():
     """
     Runs the game functions
     """
     user_options()
-
-    print(Fore.CYAN + "First, choose your ship locations. \n")
+    
+    print(Fore.CYAN + "First, choose your 5 ship locations. \n")
     
     player_coords = player_place_ships()
     print("Player Coordinates:", player_coords)
-
+    
     cpu_coords = cpu_place_ships()
     print("CPU Coordinates:", cpu_coords)
     
@@ -295,7 +301,9 @@ def main():
     current_player = (who_plays_first)
     
     take_shot()
-
+    
+    player_turn()
+    
     while True:
         if current_player == 'player':
             os.system('clear')
