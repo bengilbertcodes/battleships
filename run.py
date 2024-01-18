@@ -41,6 +41,7 @@ def create_username():
             x = greet_username.center(80)
             print(Fore.YELLOW + x)
             break
+    return username
 
 
 def user_options():
