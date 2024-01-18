@@ -292,7 +292,14 @@ update_p_shot = edit_player_shot()
 # print(update_p_shot)
 
 def player_turn():
-    # while True:
+    """
+    Takes user input p_shot.
+    Checks against cpu_coords list.
+    If match is True = Hit
+    Updates the PLAYER_GUESS_BOARD with X or O (Hit or Miss)
+    Adds coordinate to list of tried shots to avoid repeats
+    """
+    while True:
         column, row = update_p_shot
         if PLAYER_GUESS_BOARD[row - 1][column] == "O":
             print("You already tried that one")
