@@ -271,17 +271,19 @@ def take_shot():
         
         if update_player_shot in tuple_coordinates_list:
             print(f"{player_shot} is valid")
+            break
         else:
             print("Input not valid")
             
     return update_player_shot
 
 def player_turn():
-    while cpu_place_ships < 5:
-        print(take_shot(), "Useable coordinate")
-        row, column = take_shot()
-        print(row, column)
-        display_board(PLAYER_GUESS_BOARD, "    {username} Board")
+    while len(cpu_place_ships()) < 5:
+        useable_coordinate = take_shot()
+        print(useable_coordinate)
+        # row, column = take_shot()
+        # print(row, column)
+        # display_board(PLAYER_GUESS_BOARD, "    {username} Board")
 
 def main():
     """
@@ -305,29 +307,29 @@ def main():
     
     player_turn()
     
-    while True:
-        if current_player == 'player':
-            os.system('clear')
-            create_title()
-            print(Fore.CYAN + f"{username}'s turn: ")
-            # player_turn()
-            current_player = 'computer'
-        else:
-            os.system('clear')
-            create_title()
-            print(Fore.CYAN + "Enemy's turn: ")
-            # computer_turn()
-            current_player = 'player'
+    # while True:
+    #     if current_player == 'player':
+    #         os.system('clear')
+    #         create_title()
+    #         print(Fore.CYAN + f"{username}'s turn: ")
+    #         # player_turn()
+    #         current_player = 'computer'
+    #     else:
+    #         os.system('clear')
+    #         create_title()
+    #         print(Fore.CYAN + "Enemy's turn: ")
+    #         # computer_turn()
+    #         current_player = 'player'
             
-    # Check for game score after each turn and exits game if score is 5 and displays the winning board
-        if count_ships(PLAYER_GUESS_BOARD) == 5:
-            print("    You destroyed all the enemy's ships! You win")
-            display_board(PLAYER_GUESS_BOARD, "    Player Board")
-            break
-        elif count_ships(ENEMY_GUESS_BOARD) == 5:
-            print("    The enemy destroyed your fleet! You lose.")
-            display_board(ENEMY_GUESS_BOARD, "    Enemy Guess Board")
-            break
+    # # Check for game score after each turn and exits game if score is 5 and displays the winning board
+    #     if count_ships(PLAYER_GUESS_BOARD) == 5:
+    #         print("    You destroyed all the enemy's ships! You win")
+    #         display_board(PLAYER_GUESS_BOARD, "    Player Board")
+    #         break
+    #     elif count_ships(ENEMY_GUESS_BOARD) == 5:
+    #         print("    The enemy destroyed your fleet! You lose.")
+    #         display_board(ENEMY_GUESS_BOARD, "    Enemy Guess Board")
+            # break
     
     
 
