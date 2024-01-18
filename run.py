@@ -119,7 +119,7 @@ letters_to_numbers = {
 
 def validate_coords(coords_list):
     # Define the pattern for the "a1" format (a letter followed by a digit)
-    pattern = re.compile(r'^[a-zA-Z]\d$')
+    pattern = re.compile(r'^[a-hA-H][1-8]$')
 
     # Check each element in the list against the pattern
     for element in coords_list:
