@@ -7,7 +7,7 @@ import re
 import os
 
 
-# Create a title for the game.
+# Create a title and intro text for the game.
 def create_title():
     with open("title.txt", "r") as f:
         title = f.readlines()
@@ -17,32 +17,30 @@ def create_title():
         lines = f.readlines()
     for line in lines:
         print(Fore.BLUE + line)
+        
+    title_text = (Fore.YELLOW + "Welcome to Battleships\n")
+    x = title_text.center(80)
+    print(x)
+    title_text_two = (Fore.YELLOW + "Prepare for Battle\n")
+    y = title_text_two.center(80)
+    print(y)
+
+    print("\r")
 
 
-create_title()
-
-title_text = (Fore.YELLOW + "Welcome to Battleships\n")
-x = title_text.center(80)
-print(x)
-title_text_two = (Fore.YELLOW + "Prepare for Battle\n")
-y = title_text_two.center(80)
-print(y)
-
-print("\r")
-
-
-username = input("Please enter your name: ")
-while not username.isalpha():
-    print(Fore.RED + "Invalid characters in username. Only use letters (aA-zZ)")
+def create_username():
     username = input("Please enter your name: ")
-while True:
-    if len(username) < 3:
-        print(Fore.RED + "Username should be at least 3 characters.")
-    else:    
-        greet_username = (f"Hello, Commander {username} \n")
-        x = greet_username.center(80)
-        print(Fore.YELLOW + x)
-        break
+    while not username.isalpha():
+        print(Fore.RED + "Invalid characters in username. Only use letters (aA-zZ)")
+        username = input("Please enter your name: ")
+    while True:
+        if len(username) < 3:
+            print(Fore.RED + "Username should be at least 3 characters.")
+        else:    
+            greet_username = (f"Hello, Commander {username} \n")
+            x = greet_username.center(80)
+            print(Fore.YELLOW + x)
+            break
 
 
 def user_options():
@@ -285,8 +283,8 @@ def edit_player_shot():
 
     return update_player_shot
 
-p_shot = take_shot()
-update_p_shot = edit_player_shot()
+# p_shot = take_shot()
+# update_p_shot = edit_player_shot()
 
 # print(p_shot)
 # print(update_p_shot)
@@ -331,6 +329,8 @@ def main():
     """
     Runs the game functions
     """
+    create_title()
+    create_username()
     user_options()
     
     print(Fore.CYAN + "First, choose your 5 ship locations. \n")
