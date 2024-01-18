@@ -9,15 +9,15 @@ import os
 
 # Create a title for the game.
 def create_title():
-    print('')
-    print('         XXXX     X   XXXXX XXXXX X     XXXXX  XXXX X   X XXXXX XXXX  XXXX')
-    print('         X   X   X X    X     X   X     X      X    X   X   X   X   X X')
-    print('         XXXX   X   X   X     X   X     XXXXX  XXXX XXXXX   X   XXXX  XXXX')
-    print('         X   X XXXXXXX  X     X   X     X         X X   X   X   X        X')
-    print('         XXXX  X     X  X     X   XXXXX XXXXX  XXXX X   X XXXXX X     XXXX')
-    print('')
-    print(Fore.BLUE + "-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-")
-    print("\n")
+    with open("title.txt", "r") as f:
+        title = f.readlines()
+    for line in title:
+        print(line.rstrip())
+    with open("line.txt", "r") as f:
+        lines = f.readlines()
+    for line in lines:
+        print(Fore.BLUE + line)
+
 
 create_title()
 
@@ -311,7 +311,7 @@ def player_turn():
             print("Miss")
             PLAYER_GUESS_BOARD[row - 1][column] = (Fore.GREEN + "O" + Fore.RESET)
             display_board(PLAYER_GUESS_BOARD, (Fore.CYAN + f" {username}'s Guess Board"))
-            
+            break
 
 def computer_turn():
     """
@@ -320,6 +320,10 @@ def computer_turn():
     If match is true = HIT else Miss
     Add coordinate to list of tried coordinates to avoid repeats
     """
+    while True:
+        column, row = randint(0,7), randint(0,7)
+        cpu_shot = column, row 
+        print(cpu_shot)
             
 
 
@@ -343,29 +347,29 @@ def main():
         
     player_turn()
     
-    # while True:
-    #     if current_player == 'player':
-    #         os.system('clear')
-    #         create_title()
-    #         print(Fore.CYAN + f"{username}'s turn: ")
-    #         # player_turn()
-    #         current_player = 'computer'
-    #     else:
-    #         os.system('clear')
-    #         create_title()
-    #         print(Fore.CYAN + "Enemy's turn: ")
-    #         # computer_turn()
-    #         current_player = 'player'
+    while True:
+        if current_player == 'player':
+            os.system('clear')
+            create_title()
+            print(Fore.CYAN + f"{username}'s turn: ")
+            player_turn()
+            current_player = 'computer'
+        else:
+            os.system('clear')
+            create_title()
+            print(Fore.CYAN + "Enemy's turn: ")
+            computer_turn()
+            current_player = 'player'
             
-    # # Check for game score after each turn and exits game if score is 5 and displays the winning board
-    #     if count_ships(PLAYER_GUESS_BOARD) == 5:
-    #         print("    You destroyed all the enemy's ships! You win")
-    #         display_board(PLAYER_GUESS_BOARD, "    Player Board")
-    #         break
-    #     elif count_ships(ENEMY_GUESS_BOARD) == 5:
-    #         print("    The enemy destroyed your fleet! You lose.")
-    #         display_board(ENEMY_GUESS_BOARD, "    Enemy Guess Board")
-            # break
+    # Check for game score after each turn and exits game if score is 5 and displays the winning board
+        if count_ships(PLAYER_GUESS_BOARD) == 5:
+            print("    You destroyed all the enemy's ships! You win")
+            display_board(PLAYER_GUESS_BOARD, "    Player Board")
+            break
+        elif count_ships(ENEMY_GUESS_BOARD) == 5:
+            print("    The enemy destroyed your fleet! You lose.")
+            display_board(ENEMY_GUESS_BOARD, "    Enemy Guess Board")
+            break
     
     
 
