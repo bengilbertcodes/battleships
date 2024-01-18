@@ -281,17 +281,18 @@ def take_shot():
             
     return update_player_shot
 
-useable_coordinate = take_shot()
-print(useable_coordinate)
+# useable_coordinate = take_shot()
+# print(useable_coordinate)
 
 def player_turn():
+    useable_coordinate = take_shot()
     column, row = useable_coordinate
     print(column, row)
-    if PLAYER_GUESS_BOARD[column][row] == "O":
+    if PLAYER_GUESS_BOARD[row][column] == "O":
         print("You already tried that one")
     else:
         print("Hit!")
-        PLAYER_GUESS_BOARD[column][row] = (Fore.RED + "X" + Fore.RESET)
+        PLAYER_GUESS_BOARD[row - 1][column] = (Fore.RED + "X" + Fore.RESET)
         display_board(PLAYER_GUESS_BOARD, f"    {username}'s Guess Board")
 
 
@@ -299,9 +300,9 @@ def main():
     """
     Runs the game functions
     """
-    # user_options()
+    user_options()
     
-    # print(Fore.CYAN + "First, choose your 5 ship locations. \n")
+    print(Fore.CYAN + "First, choose your 5 ship locations. \n")
     
     player_coords = player_place_ships()
     print("Player Coordinates:", player_coords)
@@ -313,7 +314,7 @@ def main():
     
     current_player = (who_plays_first)
     
-    # take_shot()
+    take_shot()
     
     player_turn()
     
