@@ -160,11 +160,23 @@ def player_place_ships():
             print(Fore.GREEN + "All coordinates match the required format")
             # convert coordinates to indices
             player_coords_list = [convert_to_indices(entry) for entry in player_coords_list]
+            
+            # populate the user board
+            populate_user_board(PLAYER_BOARD, player_coords_list)
+            display_board(PLAYER_BOARD, Fore.CYAN + "And here are your ships:")
             break
         else:
             print(Fore.RED + "Not all coords match the required format (letter and number, e.g., a1)")
 
     return player_coords_list
+
+def populate_user_board(user_board, user_coords):
+    """
+    Populate the user board with the user's ship coordinates.
+    """
+    for coord in user_coords:
+        column, row = coord
+        user_board[row][column] = 'S'
 
 
 def cpu_place_ships():
@@ -273,18 +285,18 @@ def player_turn():
         column, row = shot_coords
 
         if (column, row) in tried_shots:
-            print("You already tried that one")
+            print(Fore.RED + "\nYou already tried that one")
             continue
 
         tried_shots.add((column, row))
 
         if (column, row) in cpu_coords_list:
-            print("Hit!")
+            print(Fore.RED + "\nHit!")
             PLAYER_GUESS_BOARD[row - 1][column] = (Fore.RED + "X" + Fore.RESET)
             display_board(PLAYER_GUESS_BOARD, (Fore.YELLOW + f" {username}'s Guess Board"))
             break
         else:
-            print("Miss")
+            print(Fore.GREEN + "\nMiss")
             PLAYER_GUESS_BOARD[row - 1][column] = (Fore.GREEN + "O" + Fore.RESET)
             display_board(PLAYER_GUESS_BOARD, (Fore.CYAN + f" {username}'s Guess Board"))
             break
@@ -308,12 +320,12 @@ def computer_turn():
             cpu_tried_shots.add(cpu_shot)
 
         if cpu_shot in player_coords_list:
-            print("Hit! Enemy has destroyed one of your ships!")
+            print(Fore.RED + "Hit! Enemy has destroyed one of your ships!")
             ENEMY_GUESS_BOARD[row - 1][column] = (Fore.RED + "X" + Fore.RESET)
             display_board(ENEMY_GUESS_BOARD, Fore.BLUE + "Enemy's Guess Board")
             break
         else:
-            print("Enemy has missed.")
+            print(Fore.GREEN + "Enemy has missed.")
             ENEMY_GUESS_BOARD[row - 1][column] = (Fore.GREEN + "O" + Fore.RESET)
             display_board(ENEMY_GUESS_BOARD, Fore.BLUE + "Enemy's Guess Board")
             break
@@ -336,17 +348,15 @@ def main():
     user_input = player_place_ships()
     cpu_input = cpu_place_ships()
     
-    print("Player coords list: ", player_coords_list)
+    print("\nPlayer coords list: ", player_coords_list)
     print("cpu coords list: ", cpu_coords_list)
-    
-    # first_player()
     
     current_player = first_player()
     
     while True:
         if current_player == 'player':
-            os.system('clear')
-            create_title()
+            # os.system('clear')
+            # create_title()
             print(Fore.CYAN + f"\n{username}'s turn: \n")
             player_turn()
             current_player = 'computer'
