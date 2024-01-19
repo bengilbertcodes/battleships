@@ -29,7 +29,12 @@ def create_title():
     print("\r")
 
 def create_username():
-    global username  # Use the global keyword to modify the global variable
+    """
+    User inputs a username between 3 and 8 characters in length
+    Function checks length and for valid characters and returns error messages
+    accordingly
+    """
+    global username  
     
     while True:
         user_input = input("Please enter your name: ")
@@ -37,11 +42,14 @@ def create_username():
             print(Fore.RED + "Invalid characters in username. Only use letters (aA-zZ)")
             continue
         elif len(user_input) < 3:
-            print(Fore.RED + "Username should be at least 3 characters.")
+            print(Fore.RED + "Username should be between 3 and 8 characters.")
+            continue
+        elif len(user_input) > 8:
+            print(Fore.RED + "Username should be between 3 and 8 characters.")
             continue
         else:
             username = user_input  # Update the global variable
-            greet_username = f"Hello, Commander {username}\n"
+            greet_username = f"\nHello, Commander {username}\n"
             x = greet_username.center(75)
             print(Fore.YELLOW + x)
             break
