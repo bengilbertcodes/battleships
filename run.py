@@ -120,9 +120,6 @@ coor_y = {
     '8': 7,
 }
 
-# cpu_coords = []
-# player_shots = []
-
 
 def display_board(board, title):
     """
@@ -195,31 +192,6 @@ def cpu_place_ships():
     return list(cpu_coords_list)
 
 
-def convert_to_indices(string):
-    coordinates = [char for char in string]
-    x = coor_x[coordinates[0]]
-    y = coor_y[coordinates[1]]
-    return [y,x]
-
-def convert_user_input(ui_dict):
-    coor_user_input = []
-    for i in range(len(ui_dict)):
-        coor = convert_to_indices(ui_dict[i])
-        coor_user_input.append(coor)
-    for coor in coor_user_input:
-        return coor_user_input
-
-
-user_input = player_place_ships()
-
-
-res = convert_user_input(user_input)
-
-print(res[0], '\n\n')
-for i in res[1]:
-    print(i)
-
-
 def count_ships(board):
     """
     Counts the number of hits ('X') on the board.
@@ -254,11 +226,12 @@ def first_player():
         print("    Computer plays first!")
 
 
-def player_shot_to_coordinates(user_input):
+def convert_to_indeces(user_input):
     """
     Takes user input eg. a1, changes letter to number
     returns coordinate to reference coordinates list
     """
+    
     column_letter = user_input[0].upper()  
     row = int(user_input[1:])
 
@@ -267,17 +240,26 @@ def player_shot_to_coordinates(user_input):
 
     return column, row
 
+user_input = player_place_ships()
+cpu_input = cpu_place_ships()
+
+result = [convert_to_indeces(entry) for entry in user_input]
+print(result)
+
+cpu_result = [convert_to_indeces(entry) for entry in cpu_input]
+print(cpu_result)
+
 
 # Creates a list of coordinates.
 # Code based on https://stackoverflow.com/questions/18817207/use-python-to-create-2d-coordinate
 # def coordinates():
-    tuple_coordinates_list = []
+    # tuple_coordinates_list = []
 
-    for x in range(BOARD_SIZE):
-        for y in range(1, 9):
-            tuple_coordinates_list.append((x, y))
+    # for x in range(BOARD_SIZE):
+    #     for y in range(1, 9):
+    #         tuple_coordinates_list.append((x, y))
 
-    return tuple_coordinates_list
+    # return tuple_coordinates_list
 
 # tuple_coordinates_list = coordinates()
 
@@ -398,7 +380,4 @@ def main():
     #         display_board(ENEMY_GUESS_BOARD, "    Enemy Guess Board")
     #         break
     
-    
-
-
-main()
+# main()
