@@ -69,3 +69,17 @@ def valid_coordinates():
     return list_of_coordinates
     
 list_of_coordinates = valid_coordinates()
+
+
+# Creates a list of coordinates.
+# Code based on https://stackoverflow.com/questions/18817207/use-python-to-create-2d-coordinate
+# def coordinates():
+#     tuple_coordinates_list = []
+
+#     for x in range(BOARD_SIZE):
+#         for y in range(1, 9):
+#             tuple_coordinates_list.append((x, y))
+
+#     return tuple_coordinates_list
+
+# tuple_coordinates_list = coordinates()

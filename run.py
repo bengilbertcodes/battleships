@@ -82,7 +82,8 @@ def user_options():
             print("Incorrect choice. Press " + Fore.YELLOW + "1 " + Fore.RESET + "to play game or " + Fore.YELLOW + "2 " + Fore.RESET + "for instructions..:")
 
 
-# Credit to Knowledge Maven's youtube series for help with the following functions
+# Credit to Knowledge Maven's youtube series for help with the following 
+# constants and display_board functions
 # https://github.com/gbrough/battleship/blob/main/single_player.py
 # https://www.youtube.com/watch?v=tF1WRCrd_HQ&t=565s&ab_channel=KnowledgeMavens
 
@@ -217,61 +218,58 @@ def convert_to_indeces(user_input):
     return column, row
 
 
-
-# Creates a list of coordinates.
-# Code based on https://stackoverflow.com/questions/18817207/use-python-to-create-2d-coordinate
-# def coordinates():
-    # tuple_coordinates_list = []
-
-    # for x in range(BOARD_SIZE):
-    #     for y in range(1, 9):
-    #         tuple_coordinates_list.append((x, y))
-
-    # return tuple_coordinates_list
-
-# tuple_coordinates_list = coordinates()
-
-
 def is_valid_input(user_input):
     if len(user_input) == 2 and user_input[0].isalpha() and user_input[1].isdigit():
         return True
     return False
 
 
+def player_shot():
+    user_input = "a8"
+    result = validate_coords([user_input])
+    if result == False:
+        print("Please enter a valid coordinate (a1 - h8)")
+    else:
+        print(user_input, "is valid")
+        p_shot = convert_to_indeces(user_input)
+    
+    print("Player shot: ", p_shot)
+
+
 def player_turn():
     """
-    Takes user input p_shot.
-    Checks against cpu_coords list.
+    Takes user input from player shot.
+    Checks against cpu_coords_list.
     If match is True = Hit
     Updates the PLAYER_GUESS_BOARD with X or O (Hit or Miss)
-    Adds coordinate to list of tried shots to avoid repeats
-    """
+    Adds coordinate to list of tried shots to avoid repeats OR checks BOARD???
+    """    
     # while True:
-    #     column, row = update_p_shot
-    #     if PLAYER_GUESS_BOARD[row - 1][column] == "O":
+    #     column, row = 
+    #     if PLAYER_GUESS_BOARD[row][column] == "O":
     #         print("You already tried that one")
     #     elif p_shot in cpu_coords:
     #         print("Hit!")
-    #         PLAYER_GUESS_BOARD[row - 1][column] = (Fore.RED + "X" + Fore.RESET)
+    #         PLAYER_GUESS_BOARD[row][column] = (Fore.RED + "X" + Fore.RESET)
     #         display_board(PLAYER_GUESS_BOARD, (Fore.CYAN + f" {username}'s Guess Board"))
     #     else:
     #         print("Miss")
-    #         PLAYER_GUESS_BOARD[row - 1][column] = (Fore.GREEN + "O" + Fore.RESET)
+    #         PLAYER_GUESS_BOARD[row][column] = (Fore.GREEN + "O" + Fore.RESET)
     #         display_board(PLAYER_GUESS_BOARD, (Fore.CYAN + f" {username}'s Guess Board"))
     #         break
 
-# def computer_turn():
-#     """
-#     Generate random coordinate.
-#     Check against player_coords list.
-#     If match is true = HIT else Miss
-#     Add coordinate to list of tried coordinates to avoid repeats
-#     """
-#     while True:
-#         column, row = randint(0,7), randint(0,7)
-#         cpu_shot = column, row 
-#         print(cpu_shot)
-#     return 
+def computer_turn():
+    """
+    Generate random coordinate.
+    Check against player_coords list.
+    If match is true = HIT else Miss
+    Add coordinate to list of tried coordinates to avoid repeats
+    """
+    while True:
+        column, row = randint(0,7), randint(0,7)
+        cpu_shot = column, row 
+        print(cpu_shot)
+    return 
 
 
 def main():
@@ -284,20 +282,22 @@ def main():
     
     os.system('clear')
     create_title()
-    print(Fore.CYAN + "First, choose your 5 ship locations. \n")
+    # print(Fore.CYAN + "First, choose your 5 ship locations. \n")
 
-    user_input = player_place_ships()
-    cpu_input = cpu_place_ships()
+    # user_input = player_place_ships()
+    # cpu_input = cpu_place_ships()
 
-    player_coords_list = [convert_to_indeces(entry) for entry in user_input]
-    cpu_coords_list = [convert_to_indeces(entry) for entry in cpu_input]
+    # player_coords_list = [convert_to_indeces(entry) for entry in user_input]
+    # cpu_coords_list = [convert_to_indeces(entry) for entry in cpu_input]
     
-    print("Player Coordinates:", player_coords_list)
-    print("CPU Coordinates:", cpu_coords_list)
+    # print("Player Coordinates:", player_coords_list)
+    # print("CPU Coordinates:", cpu_coords_list)
     
     first_player()
     
     current_player = (who_plays_first)
+    
+    player_shot()
 
     # player_turn()
     
