@@ -2,6 +2,7 @@ import random
 import time
 import re
 import os
+import sys
 from os import system, name
 from random import randint
 from colorama import Fore, Back, Style, init
@@ -27,6 +28,7 @@ def create_title():
     print(y)
 
     print("\r")
+
 
 def create_username():
     """
@@ -123,7 +125,7 @@ cpu_tried_shots = set()
 
 def display_board(board, title):
     """
-    Function to display the board
+    Function to display the game board
     """
     print(f"\n{title}")
     print('  A B C D E F G H')
@@ -135,6 +137,9 @@ def display_board(board, title):
 
 
 def validate_coords(coords_list):
+    """
+    Validation to match data with a list of coordinates
+    """ 
     # Define the pattern for the "a1" format (a letter followed by a digit)
     pattern = re.compile(r'^[a-hA-H][1-8]$')
 
@@ -256,14 +261,20 @@ def convert_to_indices(user_input):
 
 
 def is_valid_input(user_input):
+    """
+    Validates user input to make sure it matches the correct 'a1' format
+    """
     if len(user_input) == 2 and user_input[0].isalpha() and user_input[1].isdigit():
         return True
     return False
 
 
 def player_shot():
+    """
+    Asks user for input. Coordinate in format a1
+    """
     while True:
-        user_input = input("Please enter a coordinate for your shot (a1 - h8): ")
+        user_input = input("\nPlease enter a coordinate for your shot (a1 - h8): ")
         result = validate_coords([user_input])
 
         if not result:
@@ -354,6 +365,37 @@ def clear():
         _ = system('clear')
 
 
+def end_game():
+    """
+    Asks for user input once a game has been won/lost
+    Either restarts the game, exits the game or returns an error
+    """
+    while True:
+        endgame_choice = input("Would you like to play again? Press '1' for yes or '2' for no followed by Enter: ")
+        if endgame_choice == "1":
+            print("Game starting in: ")
+            print("3")
+            time.sleep(1)
+            print("2")
+            time.sleep(1)
+            print("1")
+            time.sleep(1)
+            clear()
+            time.sleep(0.5)
+            main()
+            break
+        elif endgame_choice == "2":
+            print("Thanks for playing! Goodbye")
+            exit_program()
+        else:
+            print(Fore.RED + "Invalid choice")
+
+
+def exit_program():
+    print("Exiting the program...")
+    sys.exit(0)
+
+
 def main():
     """
     Runs the game functions
@@ -374,7 +416,8 @@ def main():
     print("\nPlayer coords list: ", player_coords_list)
     print("cpu coords list: ", cpu_coords_list)
     
-    input("\nPress any key to start the game")
+    print("\nPress ENTER to start the game")
+    input()
     clear()
     
     current_player = first_player()
@@ -384,12 +427,14 @@ def main():
         
     while True:
         if current_player == 'player':
-            # create_title()
-            print(Fore.CYAN + f"\n{username}'s turn: \n")
+            print(Fore.CYAN + f"\n{username}'s turn: ")
+            display_board(PLAYER_GUESS_BOARD, Fore.YELLOW + f"{username}'s Guess Board")
             player_turn()
             player_score = count_ships(PLAYER_GUESS_BOARD)
             print(Fore.YELLOW + f"\n{username}'s score: ", player_score)
             print(Fore.BLUE + f"Enemy's score: ", cpu_score)
+            input("Press Enter to continue... ")
+            clear()
             current_player = 'computer'
         else:
             print(Fore.CYAN + "\nEnemy's turn: \n")
@@ -397,6 +442,7 @@ def main():
             cpu_score = count_ships(ENEMY_GUESS_BOARD)
             print(Fore.YELLOW + f"\n{username}'s score: ", player_score)
             print(Fore.BLUE + f"Enemy's score: ", cpu_score)
+            time.sleep(1.5)
             current_player = 'player'
             
     # Check for game score after each turn and exits game if score is 5 and displays the winning board
@@ -406,6 +452,7 @@ def main():
             x = player_victory.center(80)
             print(x)
             display_board(PLAYER_GUESS_BOARD, Fore.CYAN + f"{username}'s Guess Board")
+            end_game()
             break
         elif count_ships(ENEMY_GUESS_BOARD) == 5:
             clear()
@@ -413,6 +460,7 @@ def main():
             y = cpu_victory.center(85)
             print(y)
             display_board(ENEMY_GUESS_BOARD, Fore.BLUE + "Enemy's Guess Board")
+            end_game()
             break
 
 
