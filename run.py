@@ -1,10 +1,10 @@
-from colorama import Fore, Back, Style, init
-init(autoreset=True)
 import random
-from random import randint
 import time
 import re
 import os
+from random import randint
+from colorama import Fore, Back, Style, init
+init(autoreset=True)
 
 
 # Create a title and intro text for the game.
