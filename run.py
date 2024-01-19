@@ -225,7 +225,7 @@ def is_valid_input(user_input):
 
 
 def player_shot():
-    user_input = "a8"
+    user_input = input("Please enetr a coordinate for your shot (a1 - h8): ")
     result = validate_coords([user_input])
     if result == False:
         print("Please enter a valid coordinate (a1 - h8)")
