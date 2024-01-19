@@ -37,8 +37,8 @@ def create_username():
         if len(username) < 3:
             print(Fore.RED + "Username should be at least 3 characters.")
         else:    
-            greet_username = (f"Hello, Commander {username} \n")
-            x = greet_username.center(80)
+            greet_username = (f"Hello, Commander {username}\n")
+            x = greet_username.center(75)
             print(Fore.YELLOW + x)
             break
     return username
@@ -97,29 +97,6 @@ PLAYER_BOARD = [[' '] * BOARD_SIZE for x in range(BOARD_SIZE)]
 ENEMY_GUESS_BOARD = [[' '] * BOARD_SIZE for x in range(BOARD_SIZE)]
 PLAYER_GUESS_BOARD = [[' '] * BOARD_SIZE for x in range(BOARD_SIZE)]
 
-# coordinate dictionaries - letters and numbers to correct indeces
-coor_x = {
-    'a': 0,
-    'b': 1,
-    'c': 2,
-    'd': 3,
-    'e': 4,
-    'f': 5,
-    'g': 6,
-    'h': 7,
-}
-
-coor_y = {
-    '1': 0,
-    '2': 1,
-    '3': 2,
-    '4': 3,
-    '5': 4,
-    '6': 5,
-    '7': 6,
-    '8': 7,
-}
-
 
 def display_board(board, title):
     """
@@ -157,7 +134,6 @@ def player_place_ships():
     """
     x = input(Fore.CYAN + "Enter five coordinates separated by a space (a1 b2 c3 d4 f5): " + Fore.RESET)
     player_coords_list = x.split(" ")
-    print(player_coords_list)
     
     check_list = validate_coords(player_coords_list)
     
@@ -221,9 +197,9 @@ def first_player():
     first_player = who_plays_first()
 
     if first_player == 'player':
-        print("    You play first!")
+        print(Fore.CYAN + "\n    You play first!\n")
     else:
-        print("    Computer plays first!")
+        print(Fore.CYAN + "\n    Computer plays first!\n")
 
 
 def convert_to_indeces(user_input):
@@ -240,14 +216,6 @@ def convert_to_indeces(user_input):
 
     return column, row
 
-user_input = player_place_ships()
-cpu_input = cpu_place_ships()
-
-result = [convert_to_indeces(entry) for entry in user_input]
-print(result)
-
-cpu_result = [convert_to_indeces(entry) for entry in cpu_input]
-print(cpu_result)
 
 
 # Creates a list of coordinates.
@@ -264,36 +232,10 @@ print(cpu_result)
 # tuple_coordinates_list = coordinates()
 
 
-def valid_coordinates():
-    """
-    List of valid coordinates to check against user input. 
-    Ensuring only correct values can be entered
-    """
-    list_of_coordinates = []
-    
-    for i in range(8):
-        for j in range(8):
-            square = chr(ord('a') + j) + str(i + 1)
-            list_of_coordinates.append(square)
-    return list_of_coordinates
-    
-list_of_coordinates = valid_coordinates()
-
-
 def is_valid_input(user_input):
     if len(user_input) == 2 and user_input[0].isalpha() and user_input[1].isdigit():
         return True
     return False
-
-
-# def checkHit(coordinate):
-#     if coordinate in cpu_coords:
-#         print("Hit")
-#         return True
-#     else:
-#         print("Miss")
-#         return False
-
 
 
 def player_turn():
@@ -343,17 +285,20 @@ def main():
     os.system('clear')
     create_title()
     print(Fore.CYAN + "First, choose your 5 ship locations. \n")
+
+    user_input = player_place_ships()
+    cpu_input = cpu_place_ships()
+
+    player_coords_list = [convert_to_indeces(entry) for entry in user_input]
+    cpu_coords_list = [convert_to_indeces(entry) for entry in cpu_input]
     
-    player_coords = player_place_ships()
-    print("Player Coordinates:", player_coords)
-    
-    cpu_coords = cpu_place_ships()
-    print("CPU Coordinates:", cpu_coords)
+    print("Player Coordinates:", player_coords_list)
+    print("CPU Coordinates:", cpu_coords_list)
     
     first_player()
     
     current_player = (who_plays_first)
-    
+
     # player_turn()
     
     # while True:
@@ -380,4 +325,4 @@ def main():
     #         display_board(ENEMY_GUESS_BOARD, "    Enemy Guess Board")
     #         break
     
-# main()
+main()

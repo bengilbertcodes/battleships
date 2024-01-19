@@ -53,3 +53,19 @@ res = convert_user_input(user_input)
 print(res[0], '\n\n')
 for i in res[1]:
     print(i)
+
+
+def valid_coordinates():
+    """
+    List of valid coordinates to check against user input. 
+    Ensuring only correct values can be entered
+    """
+    list_of_coordinates = []
+    
+    for i in range(8):
+        for j in range(8):
+            square = chr(ord('a') + j) + str(i + 1)
+            list_of_coordinates.append(square)
+    return list_of_coordinates
+    
+list_of_coordinates = valid_coordinates()
