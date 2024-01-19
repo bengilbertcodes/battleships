@@ -228,17 +228,15 @@ def is_valid_input(user_input):
 def player_shot():
     while True:
         user_input = input("Please enter a coordinate for your shot (a1 - h8): ")
-        update_user_input = is_valid_input(user_input)
-        
         result = validate_coords([user_input])
-        if result == False:
+
+        if not result:
             print("Invalid coordinates!!!")
             continue
-        else:
-            print(user_input, "is valid")
-            p_shot = convert_to_indeces(user_input)
-            break
-    print("Player shot: ", p_shot)
+
+        print(user_input, "is valid")
+        shot_coords = convert_to_indeces(user_input)
+        return shot_coords
 
 
 def player_turn():
@@ -248,20 +246,38 @@ def player_turn():
     If match is True = Hit
     Updates the PLAYER_GUESS_BOARD with X or O (Hit or Miss)
     Adds coordinate to list of tried shots to avoid repeats OR checks BOARD???
-    """    
-    # while True:
-    #     column, row = 
-    #     if PLAYER_GUESS_BOARD[row][column] == "O":
-    #         print("You already tried that one")
-    #     elif p_shot in cpu_coords:
-    #         print("Hit!")
-    #         PLAYER_GUESS_BOARD[row][column] = (Fore.RED + "X" + Fore.RESET)
-    #         display_board(PLAYER_GUESS_BOARD, (Fore.CYAN + f" {username}'s Guess Board"))
-    #     else:
-    #         print("Miss")
-    #         PLAYER_GUESS_BOARD[row][column] = (Fore.GREEN + "O" + Fore.RESET)
-    #         display_board(PLAYER_GUESS_BOARD, (Fore.CYAN + f" {username}'s Guess Board"))
-    #         break
+    """
+    username = create_username()
+    tried_shots = set()
+    cpu_input = cpu_place_ships()
+    cpu_coords_list = [convert_to_indeces(entry) for entry in cpu_input]
+    print(cpu_coords_list)
+
+    while True:
+        shot_coords = player_shot()
+        
+        if shot_coords is None:
+            print("Error: player_shot returned None")
+            continue
+
+        column, row = shot_coords
+
+        if (column, row) in tried_shots:
+            print("You already tried that one")
+            continue
+
+        tried_shots.add((column, row))
+
+        if (column, row) in cpu_coords_list:
+            print("Hit!")
+            PLAYER_GUESS_BOARD[row - 1][column] = (Fore.RED + "X" + Fore.RESET)
+            display_board(PLAYER_GUESS_BOARD, (Fore.CYAN + f" {username}'s Guess Board"))
+        else:
+            print("Miss")
+            PLAYER_GUESS_BOARD[row - 1][column] = (Fore.GREEN + "O" + Fore.RESET)
+            display_board(PLAYER_GUESS_BOARD, (Fore.CYAN + f" {username}'s Guess Board"))
+            break
+
 
 def computer_turn():
     """
@@ -270,12 +286,33 @@ def computer_turn():
     If match is true = HIT else Miss
     Add coordinate to list of tried coordinates to avoid repeats
     """
+    column, row = randint(0,7), randint(0,7)
+    cpu_shot = column, row 
+    print("cpu shot: ", cpu_shot)
+    cpu_tried_shots = set()
+    user_input = player_place_ships()
+    player_coords_list = [convert_to_indeces(entry) for entry in user_input]
+    
     while True:
-        column, row = randint(0,7), randint(0,7)
-        cpu_shot = column, row 
-        print(cpu_shot)
-    return 
+        shot_coords = player_shot()
+        
+        if shot_coords is None:
+            print("Error: player_shot returned None")
+            continue
 
+        column, row = shot_coords
+
+        if (column, row) in cpu_tried_shots:
+            print("You already tried that one")
+            continue
+
+        cpu_tried_shots.add((column, row))
+
+        if (column, row) in player_coords_list:
+            print("Hit! Enemy has destroyed one of your ships!")
+        else:
+            print("Enemy has missed.")
+            break      
 
 def main():
     """
@@ -290,35 +327,31 @@ def main():
     print(Fore.CYAN + "First, choose your 5 ship locations. \n")
 
     user_input = player_place_ships()
-    # cpu_input = cpu_place_ships()
+    cpu_input = cpu_place_ships()
 
-    # player_coords_list = [convert_to_indeces(entry) for entry in user_input]
-    # cpu_coords_list = [convert_to_indeces(entry) for entry in cpu_input]
+    player_coords_list = [convert_to_indeces(entry) for entry in user_input]
+    cpu_coords_list = [convert_to_indeces(entry) for entry in cpu_input]
     
-    # print("Player Coordinates:", player_coords_list)
-    # print("CPU Coordinates:", cpu_coords_list)
+    print("Player Coordinates:", player_coords_list)
+    print("CPU Coordinates:", cpu_coords_list)
     
     first_player()
     
     current_player = (who_plays_first)
     
-    player_shot()
-
-    # player_turn()
-    
-    # while True:
-    #     if current_player == 'player':
-    #         os.system('clear')
-    #         create_title()
-    #         print(Fore.CYAN + f"{username}'s turn: ")
-    #         player_turn()
-    #         current_player = 'computer'
-    #     else:
-    #         os.system('clear')
-    #         create_title()
-    #         print(Fore.CYAN + "Enemy's turn: ")
-    #         computer_turn()
-    #         current_player = 'player'
+    while True:
+        if current_player == 'player':
+            # os.system('clear')
+            # create_title()
+            print(Fore.CYAN + f"{username}'s turn: ")
+            player_turn()
+            current_player = 'computer'
+        else:
+            # os.system('clear')
+            # create_title()
+            print(Fore.CYAN + "Enemy's turn: ")
+            computer_turn()
+            current_player = 'player'
             
     # Check for game score after each turn and exits game if score is 5 and displays the winning board
         # if count_ships(PLAYER_GUESS_BOARD) == 5:
