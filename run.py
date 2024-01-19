@@ -176,7 +176,7 @@ def populate_user_board(user_board, user_coords):
     """
     for coord in user_coords:
         column, row = coord
-        user_board[row][column] = 'S'
+        user_board[row - 1][column] = 'S'
 
 
 def cpu_place_ships():
@@ -298,7 +298,7 @@ def player_turn():
         else:
             print(Fore.GREEN + "\nMiss")
             PLAYER_GUESS_BOARD[row - 1][column] = (Fore.GREEN + "O" + Fore.RESET)
-            display_board(PLAYER_GUESS_BOARD, (Fore.CYAN + f" {username}'s Guess Board"))
+            display_board(PLAYER_GUESS_BOARD, (Fore.YELLOW + f" {username}'s Guess Board"))
             break
 
 
