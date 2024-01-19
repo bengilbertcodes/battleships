@@ -171,6 +171,7 @@ def player_place_ships():
 
     return player_coords_list
 
+
 def populate_user_board(user_board, user_coords):
     """
     Populate the user board with the user's ship coordinates.
@@ -365,28 +366,43 @@ def main():
     print("\nPlayer coords list: ", player_coords_list)
     print("cpu coords list: ", cpu_coords_list)
     
+    input("\nPress any key to start the game")
+    clear()
+    
     current_player = first_player()
+    
+    player_score = count_ships(PLAYER_GUESS_BOARD)
+    cpu_score = count_ships(ENEMY_GUESS_BOARD)
     
     while True:
         if current_player == 'player':
-            clear()
             # create_title()
             print(Fore.CYAN + f"\n{username}'s turn: \n")
             player_turn()
+            print(Fore.YELLOW + f"\n{username}'s score: ", player_score)
+            print(Fore.BLUE + f"Enemy's score: ", player_score)
             current_player = 'computer'
         else:
             print(Fore.CYAN + "\nEnemy's turn: \n")
             computer_turn()
+            print(Fore.YELLOW + f"\n{username}'s score: ", player_score)
+            print(Fore.BLUE + f"Enemy's score: ", player_score)
             current_player = 'player'
             
     # Check for game score after each turn and exits game if score is 5 and displays the winning board
         if count_ships(PLAYER_GUESS_BOARD) == 5:
-            print("    You destroyed all the enemy's ships! You win")
-            display_board(PLAYER_GUESS_BOARD, f"{username}'s Board")
+            clear()
+            player_victory = (Fore.YELLOW + "You destroyed all the enemy's ships. You win!")
+            x = player_victory.center(80)
+            print(x)
+            display_board(PLAYER_GUESS_BOARD, Fore.CYAN + f"{username}'s Guess Board")
             break
         elif count_ships(ENEMY_GUESS_BOARD) == 5:
-            print("    The enemy destroyed your fleet! You lose.")
-            display_board(ENEMY_GUESS_BOARD, "Enemy's Guess Board")
+            clear()
+            cpu_victory = (Fore.BLUE + "The enemy destroyed your fleet! You lose.")
+            y = cpu_victory.center(85)
+            print(y)
+            display_board(ENEMY_GUESS_BOARD, Fore.BLUE + "Enemy's Guess Board")
             break
 
 
