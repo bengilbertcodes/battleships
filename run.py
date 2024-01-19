@@ -2,6 +2,7 @@ import random
 import time
 import re
 import os
+from os import system, name
 from random import randint
 from colorama import Fore, Back, Style, init
 init(autoreset=True)
@@ -331,6 +332,19 @@ def computer_turn():
             break
 
 
+def clear():
+    """
+    Clear screen function which works on windows, mac and linux
+    """
+    # for windows
+    if name == 'nt':
+        _ = system('cls')
+
+    # for mac and linux(here, os.name is 'posix')
+    else:
+        _ = system('clear')
+
+
 def main():
     """
     Runs the game functions
@@ -339,7 +353,7 @@ def main():
     create_username()
     user_options()
     
-    os.system('clear')
+    clear()
     create_title()
     print(Fore.CYAN + "First, choose your 5 ship locations. \n")
     
@@ -355,7 +369,7 @@ def main():
     
     while True:
         if current_player == 'player':
-            # os.system('clear')
+            clear()
             # create_title()
             print(Fore.CYAN + f"\n{username}'s turn: \n")
             player_turn()
