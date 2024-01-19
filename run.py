@@ -306,9 +306,11 @@ def computer_turn():
 
         if (column, row) in player_coords_list:
             print("Hit! Enemy has destroyed one of your ships!")
+            ENEMY_GUESS_BOARD[row - 1][column] = (Fore.RED + "X" + Fore.RESET)
             break
         else:
             print("Enemy has missed.")
+            ENEMY_GUESS_BOARD[row - 1][column] = (Fore.GREEN + "O" + Fore.RESET)
             break      
 
 def main():
@@ -348,13 +350,13 @@ def main():
             current_player = 'player'
             
     # Check for game score after each turn and exits game if score is 5 and displays the winning board
-        # if count_ships(PLAYER_GUESS_BOARD) == 5:
-        #     print("    You destroyed all the enemy's ships! You win")
-        #     display_board(PLAYER_GUESS_BOARD, "    Player Board")
-        #     break
-        # elif count_ships(ENEMY_GUESS_BOARD) == 5:
-        #     print("    The enemy destroyed your fleet! You lose.")
-        #     display_board(ENEMY_GUESS_BOARD, "    Enemy Guess Board")
-        #     break
+        if count_ships(PLAYER_GUESS_BOARD) == 5:
+            print("    You destroyed all the enemy's ships! You win")
+            display_board(PLAYER_GUESS_BOARD, "    Player Board")
+            break
+        elif count_ships(ENEMY_GUESS_BOARD) == 5:
+            print("    The enemy destroyed your fleet! You lose.")
+            display_board(ENEMY_GUESS_BOARD, "    Enemy Guess Board")
+            break
     
 main()
