@@ -296,13 +296,12 @@ def computer_turn():
     If match is true = HIT else Miss
     Add coordinate to list of tried coordinates to avoid repeats
     """
-    column, row = randint(0,7), randint(0,7)
-    cpu_shot = column, row 
-    print("cpu shot: ", cpu_shot)
-    
     while True:
+        # Generate random coordinates within the valid range
+        column, row = randint(0, 7), randint(0, 7)
+        cpu_shot = column, row 
+        
         if cpu_shot in cpu_tried_shots:
-            print("CPU already tried that one")
             continue
         else:
             cpu_tried_shots.add(cpu_shot)
@@ -314,7 +313,7 @@ def computer_turn():
         else:
             print("Enemy has missed.")
             ENEMY_GUESS_BOARD[row - 1][column] = (Fore.GREEN + "O" + Fore.RESET)
-            break     
+            break
 
 def main():
     """
