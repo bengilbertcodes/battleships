@@ -27,22 +27,25 @@ def create_title():
 
     print("\r")
 
+username = ""
 
 def create_username():
+    global username  # Use the global keyword to modify the global variable
+    
     while True:
-        username = input("Please enter your name: ")
-        if not username.isalpha():
+        user_input = input("Please enter your name: ")
+        if not user_input.isalpha():
             print(Fore.RED + "Invalid characters in username. Only use letters (aA-zZ)")
             continue
-        elif len(username) < 3:
+        elif len(user_input) < 3:
             print(Fore.RED + "Username should be at least 3 characters.")
             continue
-        else:    
-            greet_username = (f"Hello, Commander {username}\n")
+        else:
+            username = user_input  # Update the global variable
+            greet_username = f"Hello, Commander {username}\n"
             x = greet_username.center(75)
             print(Fore.YELLOW + x)
             break
-    return username
 
 
 def user_options():
@@ -244,7 +247,7 @@ def player_shot():
             continue
 
         print(user_input, "is valid")
-        shot_coords = convert_to_indeces(user_input)
+        shot_coords = convert_to_indices(user_input)
         return shot_coords
 
 
@@ -256,7 +259,6 @@ def player_turn():
     Updates the PLAYER_GUESS_BOARD with X or O (Hit or Miss)
     Adds coordinate to list of tried shots to avoid repeats OR checks BOARD???
     """
-    username = create_username()
     tried_shots = set()
     print(cpu_coords_list)
 
@@ -299,22 +301,11 @@ def computer_turn():
     cpu_tried_shots = set()
     
     while True:
-        shot_coords = player_shot()
-        
-        if shot_coords is None:
-            print("Error: player_shot returned None")
-            continue
-
-        column, row = shot_coords
-
-        if (column, row) in cpu_tried_shots:
-            print("You already tried that one")
-            continue
-
         cpu_tried_shots.add((column, row))
 
         if (column, row) in player_coords_list:
             print("Hit! Enemy has destroyed one of your ships!")
+            break
         else:
             print("Enemy has missed.")
             break      
@@ -324,7 +315,7 @@ def main():
     Runs the game functions
     """
     create_title()
-    username = create_username()
+    create_username()
     user_options()
     
     os.system('clear')
