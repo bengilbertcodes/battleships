@@ -18,10 +18,10 @@ def create_title():
     for line in lines:
         print(Fore.BLUE + line)
         
-    title_text = (Fore.YELLOW + "Welcome to Battleships\n")
+    title_text = (Fore.YELLOW + "Welcome to Battleships \n")
     x = title_text.center(80)
     print(x)
-    title_text_two = (Fore.YELLOW + "Prepare for Battle\n")
+    title_text_two = (Fore.YELLOW + "Prepare for Battle \n")
     y = title_text_two.center(80)
     print(y)
 
@@ -80,7 +80,7 @@ def user_options():
             print("\nPress " + Fore.YELLOW + "1 " + Fore.RESET + "to play game or " + Fore.YELLOW + "2 " + Fore.RESET + "for instructions..:")
         else:
             print("Incorrect choice. Press " + Fore.YELLOW + "1 " + Fore.RESET + "to play game or " + Fore.YELLOW + "2 " + Fore.RESET + "for instructions..:")
-            
+
 
 # Credit to Knowledge Maven's youtube series for help with the following functions
 # https://github.com/gbrough/battleship/blob/main/single_player.py
@@ -112,7 +112,7 @@ def display_board(board, title):
     for row in board:
         print(f"{row_number}|{'|'.join(row)}|")
         row_number += 1
-        
+
 # convert column letters into numbers 
 letters_to_numbers = {
     'A': 0, 'B': 1, 'C': 2, 'D': 3, 'E': 4, 'F': 5, 'G': 6, 'H': 7
@@ -331,9 +331,10 @@ def main():
     Runs the game functions
     """
     create_title()
-    create_username()
+    username = create_username()
     user_options()
     
+    os.system('clear')
     print(Fore.CYAN + "First, choose your 5 ship locations. \n")
     
     player_coords = player_place_ships()
