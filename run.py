@@ -29,13 +29,14 @@ def create_title():
 
 
 def create_username():
-    username = input("Please enter your name: ")
-    while not username.isalpha():
-        print(Fore.RED + "Invalid characters in username. Only use letters (aA-zZ)")
-        username = input("Please enter your name: ")
     while True:
-        if len(username) < 3:
+        username = input("Please enter your name: ")
+        if not username.isalpha():
+            print(Fore.RED + "Invalid characters in username. Only use letters (aA-zZ)")
+            continue
+        elif len(username) < 3:
             print(Fore.RED + "Username should be at least 3 characters.")
+            continue
         else:    
             greet_username = (f"Hello, Commander {username}\n")
             x = greet_username.center(75)
@@ -140,12 +141,12 @@ def player_place_ships():
     
     if len(player_coords_list) != 5 or not check_list:
         print(Fore.RED + "Incorrect coordinates entered. Please enter 5 unique coordinates...")
-        return player_place_ships()
+        player_place_ships()
     elif check_list:
         print(Fore.GREEN + "All coordinates match required format")
     else:
         print(Fore.RED + "Not all coords match required format (letter and number (a1)")
-        return player_place_ships()
+        player_place_ships()
         
     return player_coords_list
 
@@ -286,9 +287,9 @@ def main():
     
     os.system('clear')
     create_title()
-    # print(Fore.CYAN + "First, choose your 5 ship locations. \n")
+    print(Fore.CYAN + "First, choose your 5 ship locations. \n")
 
-    # user_input = player_place_ships()
+    user_input = player_place_ships()
     # cpu_input = cpu_place_ships()
 
     # player_coords_list = [convert_to_indeces(entry) for entry in user_input]
@@ -319,14 +320,14 @@ def main():
     #         computer_turn()
     #         current_player = 'player'
             
-    # # Check for game score after each turn and exits game if score is 5 and displays the winning board
-    #     if count_ships(PLAYER_GUESS_BOARD) == 5:
-    #         print("    You destroyed all the enemy's ships! You win")
-    #         display_board(PLAYER_GUESS_BOARD, "    Player Board")
-    #         break
-    #     elif count_ships(ENEMY_GUESS_BOARD) == 5:
-    #         print("    The enemy destroyed your fleet! You lose.")
-    #         display_board(ENEMY_GUESS_BOARD, "    Enemy Guess Board")
-    #         break
+    # Check for game score after each turn and exits game if score is 5 and displays the winning board
+        # if count_ships(PLAYER_GUESS_BOARD) == 5:
+        #     print("    You destroyed all the enemy's ships! You win")
+        #     display_board(PLAYER_GUESS_BOARD, "    Player Board")
+        #     break
+        # elif count_ships(ENEMY_GUESS_BOARD) == 5:
+        #     print("    The enemy destroyed your fleet! You lose.")
+        #     display_board(ENEMY_GUESS_BOARD, "    Enemy Guess Board")
+        #     break
     
 main()
