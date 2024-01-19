@@ -368,8 +368,8 @@ def main():
     
     display_board(PLAYER_BOARD, Fore.CYAN + "Here's your board:")
 
-    user_input = player_place_ships()
-    cpu_input = cpu_place_ships()
+    player_place_ships()
+    cpu_place_ships()
     
     print("\nPlayer coords list: ", player_coords_list)
     print("cpu coords list: ", cpu_coords_list)
@@ -379,22 +379,24 @@ def main():
     
     current_player = first_player()
     
-    player_score = count_ships(PLAYER_GUESS_BOARD)
     cpu_score = count_ships(ENEMY_GUESS_BOARD)
-    
+    player_score = count_ships(PLAYER_GUESS_BOARD)
+        
     while True:
         if current_player == 'player':
             # create_title()
             print(Fore.CYAN + f"\n{username}'s turn: \n")
             player_turn()
+            player_score = count_ships(PLAYER_GUESS_BOARD)
             print(Fore.YELLOW + f"\n{username}'s score: ", player_score)
-            print(Fore.BLUE + f"Enemy's score: ", player_score)
+            print(Fore.BLUE + f"Enemy's score: ", cpu_score)
             current_player = 'computer'
         else:
             print(Fore.CYAN + "\nEnemy's turn: \n")
             computer_turn()
+            cpu_score = count_ships(ENEMY_GUESS_BOARD)
             print(Fore.YELLOW + f"\n{username}'s score: ", player_score)
-            print(Fore.BLUE + f"Enemy's score: ", player_score)
+            print(Fore.BLUE + f"Enemy's score: ", cpu_score)
             current_player = 'player'
             
     # Check for game score after each turn and exits game if score is 5 and displays the winning board
