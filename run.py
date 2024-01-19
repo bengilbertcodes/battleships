@@ -27,8 +27,6 @@ def create_title():
 
     print("\r")
 
-username = ""
-
 def create_username():
     global username  # Use the global keyword to modify the global variable
     
@@ -102,6 +100,17 @@ PLAYER_BOARD = [[' '] * BOARD_SIZE for x in range(BOARD_SIZE)]
 ENEMY_GUESS_BOARD = [[' '] * BOARD_SIZE for x in range(BOARD_SIZE)]
 PLAYER_GUESS_BOARD = [[' '] * BOARD_SIZE for x in range(BOARD_SIZE)]
 
+# global variables
+# List of player coordinates
+player_coords_list = []
+# list of compuer coordinates
+cpu_coords_list = []
+# Name entered by player
+username = ""
+# List of tried shots by player
+tried_shots = set()
+# List of computer tried shots
+cpu_tried_shots = set()
 
 def display_board(board, title):
     """
@@ -131,8 +140,6 @@ def validate_coords(coords_list):
     # If all elements match the pattern, return True
     return True
 
-player_coords_list = []
-cpu_coords_list = []
 
 def player_place_ships():
     """
@@ -142,7 +149,7 @@ def player_place_ships():
     global player_coords_list
 
     while True:
-        x = input(Fore.CYAN + "Enter five coordinates separated by a space (a1 b2 c3 d4 f5): " + Fore.RESET)
+        x = input(Fore.CYAN + "Enter five coordinates (a1 to h8) separated by a space eg. a1 b2 c3 d4 f5: " + Fore.RESET)
         player_coords_list = x.split(" ")
 
         check_list = validate_coords(player_coords_list)
@@ -197,23 +204,17 @@ def count_ships(board):
     return count
 
 
-def who_plays_first():
-    """
-    uses random.choice to choose which player starts the game
-    """
-    return random.choice(['player', 'computer'])
-
-
 def first_player():
     """
     Displays a message informing user who starts the game
     """
-    first_player = who_plays_first()
+    first_player = random.choice(['player', 'computer'])
 
     if first_player == 'player':
-        print(Fore.CYAN + "\n    You play first!\n")
+        print(Fore.YELLOW + f"\nCommander {username} to play first!")
     else:
-        print(Fore.CYAN + "\n    Computer plays first!\n")
+        print(Fore.YELLOW + "\nComputer Enemy plays first!")
+    return first_player
 
 
 def convert_to_indices(user_input):
@@ -243,10 +244,9 @@ def player_shot():
         result = validate_coords([user_input])
 
         if not result:
-            print("Invalid coordinates!!!")
+            print(Fore.RED + "Invalid coordinates!!!")
             continue
 
-        print(user_input, "is valid")
         shot_coords = convert_to_indices(user_input)
         return shot_coords
 
@@ -259,7 +259,7 @@ def player_turn():
     Updates the PLAYER_GUESS_BOARD with X or O (Hit or Miss)
     Adds coordinate to list of tried shots to avoid repeats OR checks BOARD???
     """
-    tried_shots = set()
+    global tried_shots
     print(cpu_coords_list)
 
     while True:
@@ -299,19 +299,22 @@ def computer_turn():
     column, row = randint(0,7), randint(0,7)
     cpu_shot = column, row 
     print("cpu shot: ", cpu_shot)
-    cpu_tried_shots = set()
     
     while True:
-        cpu_tried_shots.add((column, row))
+        if cpu_shot in cpu_tried_shots:
+            print("CPU already tried that one")
+            continue
+        else:
+            cpu_tried_shots.add(cpu_shot)
 
-        if (column, row) in player_coords_list:
+        if cpu_shot in player_coords_list:
             print("Hit! Enemy has destroyed one of your ships!")
             ENEMY_GUESS_BOARD[row - 1][column] = (Fore.RED + "X" + Fore.RESET)
             break
         else:
             print("Enemy has missed.")
             ENEMY_GUESS_BOARD[row - 1][column] = (Fore.GREEN + "O" + Fore.RESET)
-            break      
+            break     
 
 def main():
     """
@@ -331,21 +334,21 @@ def main():
     print("Player coords list: ", player_coords_list)
     print("cpu coords list: ", cpu_coords_list)
     
-    first_player()
+    # first_player()
     
-    current_player = (who_plays_first)
+    current_player = first_player()
     
     while True:
         if current_player == 'player':
             # os.system('clear')
             # create_title()
-            print(Fore.CYAN + f"{username}'s turn: ")
+            print(Fore.CYAN + f"\n{username}'s turn: \n")
             player_turn()
             current_player = 'computer'
         else:
             # os.system('clear')
             # create_title()
-            print(Fore.CYAN + "Enemy's turn: ")
+            print(Fore.CYAN + "\nEnemy's turn: \n")
             computer_turn()
             current_player = 'player'
             
