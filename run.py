@@ -128,45 +128,54 @@ def validate_coords(coords_list):
     # If all elements match the pattern, return True
     return True
 
+player_coords_list = []
+cpu_coords_list = []
 
 def player_place_ships():
     """
     Prompt for user input for 5 coordinates.
-    Coordinates then split into list.
+    Coordinates then split into a list.
     """
-    x = input(Fore.CYAN + "Enter five coordinates separated by a space (a1 b2 c3 d4 f5): " + Fore.RESET)
-    player_coords_list = x.split(" ")
-    
-    check_list = validate_coords(player_coords_list)
-    
-    if len(player_coords_list) != 5 or not check_list:
-        print(Fore.RED + "Incorrect coordinates entered. Please enter 5 unique coordinates...")
-        player_place_ships()
-    elif check_list:
-        print(Fore.GREEN + "All coordinates match required format")
-    else:
-        print(Fore.RED + "Not all coords match required format (letter and number (a1)")
-        player_place_ships()
-        
-    return player_coords_list
+    global player_coords_list
 
+    while True:
+        x = input(Fore.CYAN + "Enter five coordinates separated by a space (a1 b2 c3 d4 f5): " + Fore.RESET)
+        player_coords_list = x.split(" ")
+
+        check_list = validate_coords(player_coords_list)
+
+        if len(player_coords_list) != 5 or not check_list:
+            print(Fore.RED + "Incorrect coordinates entered. Please enter 5 unique coordinates...")
+        elif check_list:
+            print(Fore.GREEN + "All coordinates match the required format")
+            # convert coordinates to indices
+            player_coords_list = [convert_to_indices(entry) for entry in player_coords_list]
+            break
+        else:
+            print(Fore.RED + "Not all coords match the required format (letter and number, e.g., a1)")
+
+    return player_coords_list
 
 def cpu_place_ships():
     """
-    Randonly create a list of 5 coordinates for computer ships.
+    Randomly create a list of 5 coordinates for computer ships.
     """
+    global cpu_coords_list
+
     letters = "abcdefgh"
     cpu_coords_list = set()
-    
+
     while len(cpu_coords_list) < 5:
         letter = random.choice(letters)
         digit = random.randint(1, 8)
         new_coord = letter + str(digit)
-        
+
         # Check if the coordinate is already in the set
         if new_coord not in cpu_coords_list:
             cpu_coords_list.add(new_coord)
 
+    cpu_coords_list = [convert_to_indices(coord) for coord in cpu_coords_list]
+    
     return list(cpu_coords_list)
 
 
@@ -204,7 +213,7 @@ def first_player():
         print(Fore.CYAN + "\n    Computer plays first!\n")
 
 
-def convert_to_indeces(user_input):
+def convert_to_indices(user_input):
     """
     Takes user input eg. a1, changes letter to number
     returns coordinate to reference coordinates list
@@ -249,8 +258,6 @@ def player_turn():
     """
     username = create_username()
     tried_shots = set()
-    cpu_input = cpu_place_ships()
-    cpu_coords_list = [convert_to_indeces(entry) for entry in cpu_input]
     print(cpu_coords_list)
 
     while True:
@@ -290,8 +297,6 @@ def computer_turn():
     cpu_shot = column, row 
     print("cpu shot: ", cpu_shot)
     cpu_tried_shots = set()
-    user_input = player_place_ships()
-    player_coords_list = [convert_to_indeces(entry) for entry in user_input]
     
     while True:
         shot_coords = player_shot()
@@ -328,12 +333,9 @@ def main():
 
     user_input = player_place_ships()
     cpu_input = cpu_place_ships()
-
-    player_coords_list = [convert_to_indeces(entry) for entry in user_input]
-    cpu_coords_list = [convert_to_indeces(entry) for entry in cpu_input]
     
-    print("Player Coordinates:", player_coords_list)
-    print("CPU Coordinates:", cpu_coords_list)
+    print("Player coords list: ", player_coords_list)
+    print("cpu coords list: ", cpu_coords_list)
     
     first_player()
     
