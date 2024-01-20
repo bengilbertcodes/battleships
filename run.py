@@ -317,7 +317,6 @@ def player_turn():
     Adds coordinate to list of tried shots to avoid repeats OR checks BOARD???
     """
     global tried_shots
-    print(cpu_coords_list)
 
     while True:
         shot_coords = player_shot()
@@ -448,8 +447,6 @@ def main():
     # Player and cpu ships are created
     player_place_ships()
     cpu_place_ships()
-    # REMEMBER TO TAKE THIS OUT (for testing only)!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    print("cpu coords list: ", cpu_coords_list)
     # Waits for user prompt to continue
     print(Fore.MAGENTA + "\nPress ENTER to start the game")
     input()
