@@ -451,7 +451,7 @@ def main():
             # Updates player score
             player_score = count_ships(PLAYER_GUESS_BOARD)
             # Waits for user prompt to continue
-            input(Fore.MAGENTA + "Press Enter to continue... ")
+            input(Fore.MAGENTA + "\nPress Enter to continue... ")
             # Clears screen
             clear()
             # Moves to next player
