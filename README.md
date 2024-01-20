@@ -20,7 +20,8 @@ Battleships is a classic game. This version is written for a human user vs a com
 
 ### Data model/Technologies/structures used
 This app was created using python 3.
-All code written using a virtual environment (venv) within vs code/
+All code written using a virtual environment (venv) within vs code.
+Code was pushed to github and deployed to Heroku.
 
 ## Testing
 
@@ -101,6 +102,8 @@ Keypresses by the user during the instructions cause the next input at prompt to
 
 
 ## Deployment Steps
+### Github
+### Heroku
 
 
 ## Credits

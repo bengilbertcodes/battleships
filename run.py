@@ -21,7 +21,6 @@ def create_title():
         lines = f.readlines()
     for line in lines:
         print(Fore.BLUE + line)
-        
     title_text = (Fore.YELLOW + "Welcome to Battleships \n")
     x = title_text.center(80)
     print(x)
@@ -38,12 +37,13 @@ def create_username():
     Function checks length and for valid characters and returns error messages
     accordingly
     """
-    global username  
-    
+    global username
+
     while True:
         user_input = input("Please enter your name: ")
         if not user_input.isalpha():
-            print(Fore.RED + "Invalid characters in username. Only use letters (aA-zZ)")
+            print(Fore.RED + "Invalid characters in username. "
+                             "Only use letters (aA-zZ)")
             continue
         elif len(user_input) < 3:
             print(Fore.RED + "Username should be between 3 and 8 characters.")
@@ -66,37 +66,45 @@ def user_options():
     # List containing instructions of how to play the game
     instructions = [
         "1. Aim of the game is to destroy all of the enemy ships.", ".",
-        "2. Choose your ships by entering 5 coordinates.\n   Letter (a-h or A-H) Number (1-8) and a space eg: a1 b3 d5 g6 c8", ".",
+        "2. Choose your ships by entering 5 coordinates."
+        "\n   Letter (a-h or A-H) Number (1-8) and a space"
+        " eg: a1 b3 d5 g6 c8", ".",
         "3. Starting player is randomly chosen.", ".",
-        "4. On your turn, choose a coordinate (letter and number (a5)) to fire at.", ".",
-        "5. If you hit a ship your board is marked 'X'. A miss is marked 'O'.", ".",
+        "4. On your turn, choose a coordinate (letter and number (a5)) "
+        "to fire at.", ".",
+        "5. If you hit a ship your board is marked 'X'. A miss is "
+        "marked 'O'.", ".",
         "6. Keep playing until somone wins!"
         ]
 
-    
-    print("Press " + Fore.YELLOW + "1 " + Fore.RESET + "to play game or " + Fore.YELLOW + "2 " + Fore.RESET + "for instructions..:")
-    
+    print("Press " + Fore.YELLOW + "1 " + Fore.RESET + "to play game or "
+          "" + Fore.YELLOW + "2 " + Fore.RESET + "for instructions..:")
+
     while True:
         choice = input("Your choice: ")
-        
+
         if choice == "1":
             print("Running the main game...\n")
             # call main game functions
             break
         elif choice == "2":
-            
+
             # print instructions
             i = 0
             while i < len(instructions):
                 print(Fore.CYAN + instructions[i])
                 i += 1
                 time.sleep(1)
-            print("\nPress " + Fore.YELLOW + "1 " + Fore.RESET + "to play game or " + Fore.YELLOW + "2 " + Fore.RESET + "for instructions..:")
+            print("\nPress " + Fore.YELLOW + "1 " + Fore.RESET + "to play "
+                  "game or " + Fore.YELLOW + "2 " + Fore.RESET + "for "
+                  "instructions..:")
         else:
-            print("Incorrect choice. Press " + Fore.YELLOW + "1 " + Fore.RESET + "to play game or " + Fore.YELLOW + "2 " + Fore.RESET + "for instructions..:")
+            print("Incorrect choice. Press " + Fore.YELLOW + ""
+                  "1 " + Fore.RESET + "to play game or " + Fore.YELLOW + ""
+                  "2 " + Fore.RESET + "for instructions..:")
 
 
-# Credit to Knowledge Maven's youtube series for help with the following 
+# Credit to Knowledge Maven's youtube series for help with the following
 # constants and display_board functions
 # https://github.com/gbrough/battleship/blob/main/single_player.py
 # https://www.youtube.com/watch?v=tF1WRCrd_HQ&t=565s&ab_channel=KnowledgeMavens
@@ -124,6 +132,7 @@ tried_shots = set()
 # List of computer tried shots
 cpu_tried_shots = set()
 
+
 def display_board(board, title):
     """
     Function to display the game board
@@ -140,7 +149,7 @@ def display_board(board, title):
 def validate_coords(coords_list):
     """
     Validation to match data with a list of coordinates
-    """ 
+    """
     # Define the pattern for the "a1" format (a letter followed by a digit)
     pattern = re.compile(r'^[a-hA-H][1-8]$')
 
@@ -148,10 +157,10 @@ def validate_coords(coords_list):
     for element in coords_list:
         if not pattern.match(element):
             return False
-        
+
     if len(set(coords_list)) != len(coords_list):
         return False
-    
+
     # If all elements match the pattern, return True
     return True
 
@@ -164,13 +173,16 @@ def player_place_ships():
     global player_coords_list
 
     while True:
-        x = input(Fore.CYAN + "\nEnter five coordinates (a1 to h8) separated by a space. \nFor example: a1 b2 c3 d4 f5: " + Fore.RESET)
+        x = input(Fore.CYAN + "\nEnter five coordinates (a1 to h8) separated "
+                              "by a space. \nFor example: "
+                              "a1 b2 c3 d4 f5: " + Fore.RESET)
         player_coords_list = x.split(" ")
 
         check_list = validate_coords(player_coords_list)
 
         if len(player_coords_list) != 5 or not check_list:
-            print(Fore.RED + "Incorrect coordinates entered. Please enter 5 unique coordinates...")
+            print(Fore.RED + "Incorrect coordinates entered. "
+                             "Please enter 5 unique coordinates...")
         elif check_list:
             print(Fore.GREEN + "All coordinates match the required format")
             time.sleep(2)
@@ -180,7 +192,8 @@ def player_place_ships():
             # populate the user board
             populate_user_board(PLAYER_BOARD, player_coords_list)
             clear()
-            display_board(PLAYER_BOARD, Fore.CYAN + "And here are your ships:\n\n")
+            display_board(PLAYER_BOARD, Fore.CYAN + "And here are your "
+                                                    "ships:\n\n")
             break
         else:
             print(Fore.RED + "Not all coords match the required format (letter and number, e.g., a1)")
