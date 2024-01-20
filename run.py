@@ -81,10 +81,11 @@ def user_options():
           "" + Fore.YELLOW + "2 " + Fore.RESET + "for instructions..:")
 
     while True:
-        choice = input("Your choice: ")
+        choice = input("\nYour choice: ")
 
         if choice == "1":
-            print("Running the main game...\n")
+            print(Fore.MAGENTA + "Running the main game...\n")
+            time.sleep(1.5)
             # call main game functions
             break
         elif choice == "2":
@@ -94,12 +95,13 @@ def user_options():
             while i < len(instructions):
                 print(Fore.CYAN + instructions[i])
                 i += 1
-                time.sleep(1)
+                time.sleep(0.6)
             print("\nPress " + Fore.YELLOW + "1 " + Fore.RESET + "to play "
                   "game or " + Fore.YELLOW + "2 " + Fore.RESET + "for "
                   "instructions..:")
         else:
-            print("Incorrect choice. Press " + Fore.YELLOW + ""
+            print(Fore.RED + "\nIncorrect choice.") 
+            print("\nPress " + Fore.YELLOW + ""
                   "1 " + Fore.RESET + "to play game or " + Fore.YELLOW + ""
                   "2 " + Fore.RESET + "for instructions..:")
 
@@ -187,8 +189,9 @@ def player_place_ships():
             print(Fore.GREEN + "All coordinates match the required format")
             time.sleep(2)
             # convert coordinates to indices
-            player_coords_list = [convert_to_indices(entry) for entry in player_coords_list]
-            
+            player_coords_list = [convert_to_indices(entry)
+                                  for entry in player_coords_list]
+
             # populate the user board
             populate_user_board(PLAYER_BOARD, player_coords_list)
             clear()
@@ -196,7 +199,8 @@ def player_place_ships():
                                                     "ships:\n\n")
             break
         else:
-            print(Fore.RED + "Not all coords match the required format (letter and number, e.g., a1)")
+            print(Fore.RED + "Not all coords match the required format "
+                             "(letter and number, e.g., a1)")
 
     return player_coords_list
 
@@ -229,7 +233,7 @@ def cpu_place_ships():
             cpu_coords_list.add(new_coord)
 
     cpu_coords_list = [convert_to_indices(coord) for coord in cpu_coords_list]
-    
+
     return list(cpu_coords_list)
 
 
@@ -266,8 +270,8 @@ def convert_to_indices(user_input):
     Takes user input eg. a1, changes letter to number
     returns coordinate to reference coordinates list
     """
-    
-    column_letter = user_input[0].upper()  
+
+    column_letter = user_input[0].upper()
     row = int(user_input[1:])
 
     # Convert the letter to a corresponding index
@@ -280,7 +284,9 @@ def is_valid_input(user_input):
     """
     Validates user input to make sure it matches the correct 'a1' format
     """
-    if len(user_input) == 2 and user_input[0].isalpha() and user_input[1].isdigit():
+    if len(user_input) == 2 and\
+            user_input[0].isalpha() and\
+            user_input[1].isdigit():
         return True
     return False
 
@@ -290,7 +296,8 @@ def player_shot():
     Asks user for input. Coordinate in format a1
     """
     while True:
-        user_input = input("\nPlease enter a coordinate for your shot (a1 - h8): ")
+        user_input = input("\nPlease enter a coordinate for your "
+                           "shot (a1 - h8): ")
         result = validate_coords([user_input])
 
         if not result:
@@ -314,7 +321,7 @@ def player_turn():
 
     while True:
         shot_coords = player_shot()
-        
+
         if shot_coords is None:
             print("Error: player_shot returned None")
             continue
@@ -330,12 +337,14 @@ def player_turn():
         if (column, row) in cpu_coords_list:
             print(Fore.RED + "\nHit!")
             PLAYER_GUESS_BOARD[row - 1][column] = (Fore.RED + "X" + Fore.RESET)
-            display_board(PLAYER_GUESS_BOARD, (Fore.YELLOW + f" {username}'s Guess Board"))
+            display_board(PLAYER_GUESS_BOARD, (Fore.YELLOW + f" {username}'s "
+                                                             "Guess Board"))
             break
         else:
             print(Fore.GREEN + "\nMiss")
-            PLAYER_GUESS_BOARD[row - 1][column] = (Fore.GREEN + "O" + Fore.RESET)
-            display_board(PLAYER_GUESS_BOARD, (Fore.YELLOW + f" {username}'s Guess Board"))
+            PLAYER_GUESS_BOARD[row-1][column] = (Fore.GREEN + "O" + Fore.RESET)
+            display_board(PLAYER_GUESS_BOARD, (Fore.YELLOW + f" {username}'s "
+                                                             "Guess Board"))
             break
 
 
@@ -349,8 +358,8 @@ def computer_turn():
     while True:
         # Generate random coordinates within the valid range
         column, row = randint(0, 7), randint(0, 7)
-        cpu_shot = column, row 
-        
+        cpu_shot = column, row
+
         if cpu_shot in cpu_tried_shots:
             continue
         else:
@@ -358,12 +367,12 @@ def computer_turn():
 
         if cpu_shot in player_coords_list:
             print(Fore.RED + "Hit! Enemy has destroyed one of your ships!")
-            ENEMY_GUESS_BOARD[row - 1][column] = (Fore.RED + "X" + Fore.RESET)
+            ENEMY_GUESS_BOARD[row-1][column] = (Fore.RED + "X" + Fore.RESET)
             display_board(ENEMY_GUESS_BOARD, Fore.BLUE + "Enemy's Guess Board")
             break
         else:
             print(Fore.GREEN + "Enemy has missed.")
-            ENEMY_GUESS_BOARD[row - 1][column] = (Fore.GREEN + "O" + Fore.RESET)
+            ENEMY_GUESS_BOARD[row-1][column] = (Fore.GREEN + "O" + Fore.RESET)
             display_board(ENEMY_GUESS_BOARD, Fore.BLUE + "Enemy's Guess Board")
             break
 
@@ -387,7 +396,10 @@ def end_game():
     Either restarts the game, exits the game or returns an error
     """
     while True:
-        endgame_choice = input("Play again? \nPress " + Fore.MAGENTA + "1 " + Fore.RESET + "for yes or " + Fore.MAGENTA + "2 " + Fore.RESET + "for no. Then " + Fore.MAGENTA + "Enter: ")
+        endgame_choice = input("\nPlay again? \n\nPress " + Fore.MAGENTA + ""
+                               "1 " + Fore.RESET + "for yes "
+                               "or " + Fore.MAGENTA + "2 " + Fore.RESET + "for"
+                               " no. Then " + Fore.MAGENTA + "Enter: ")
         if endgame_choice == "1":
             print("Game starting in: ")
             print("3")
@@ -442,12 +454,12 @@ def main():
     print(Fore.MAGENTA + "\nPress ENTER to start the game")
     input()
     clear()
-    
+
     current_player = first_player()
-    
+
     cpu_score = count_ships(ENEMY_GUESS_BOARD)
     player_score = count_ships(PLAYER_GUESS_BOARD)
-        
+
     while True:
         if current_player == 'player':
             # clears screen
@@ -457,7 +469,8 @@ def main():
             print(Fore.BLUE + f"Enemy's score: ", cpu_score)
             # Display's current player and guess board
             print(Fore.CYAN + f"\n{username}'s turn: ")
-            display_board(PLAYER_GUESS_BOARD, Fore.YELLOW + f"{username}'s Guess Board")
+            display_board(PLAYER_GUESS_BOARD, Fore.YELLOW + f"{username}'s "
+                                                            "Guess Board")
             # Run's player_turn() function
             player_turn()
             # Updates player score
@@ -482,16 +495,19 @@ def main():
             time.sleep(3)
             # Switches to next player
             current_player = 'player'
-            
-    # Check for game score after each turn and exits game if score is 5 and displays the winning board
+
+    # Check for game score after each turn and exits game if score is 5
+    # and displays the winning board
         if count_ships(PLAYER_GUESS_BOARD) == 5:
             clear()
             # display winning message
-            player_victory = (Fore.YELLOW + "\n\n\nYou destroyed all the enemy's ships. You win!")
+            player_victory = (Fore.YELLOW + "\n\n\nYou destroyed all the "
+                              "enemy's ships. You win!")
             x = player_victory.center(80)
             print(x)
             # Displays the player board and scores
-            display_board(PLAYER_GUESS_BOARD, Fore.CYAN + f"{username}'s Guess Board")
+            display_board(PLAYER_GUESS_BOARD, Fore.CYAN + f"{username}'s "
+                                                          "Guess Board")
             print(Fore.YELLOW + f"\n{username}'s score: ", player_score)
             print(Fore.BLUE + f"Enemy's score: ", cpu_score)
             # call end_game function
@@ -500,7 +516,8 @@ def main():
         elif count_ships(ENEMY_GUESS_BOARD) == 5:
             clear()
             # display defeat message
-            cpu_victory = (Fore.BLUE + "\n\n\nThe enemy destroyed your fleet! You lose.")
+            cpu_victory = (Fore.BLUE + "\n\n\nThe enemy destroyed your "
+                           "fleet! You lose.")
             y = cpu_victory.center(85)
             print(y)
             # Display's winning board and scores
