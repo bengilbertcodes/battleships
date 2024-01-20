@@ -1,7 +1,6 @@
 import random
 import time
 import re
-# import os
 import sys
 from os import system, name
 from random import randint
@@ -425,7 +424,7 @@ def main():
     # Player and cpu ships are created
     player_place_ships()
     cpu_place_ships()
-    # REMEMBER TO TAKE THIS OUT (for testing only)
+    # REMEMBER TO TAKE THIS OUT (for testing only)!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     print("cpu coords list: ", cpu_coords_list)
     # Waits for user prompt to continue
     print(Fore.MAGENTA + "\nPress ENTER to start the game")
