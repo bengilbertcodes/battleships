@@ -78,14 +78,20 @@ All tests achieved the expected result (pass).
 |                             | '2' entered                                    | Game exits after message is displayed|
 
 
-### Bugs
+## Bugs
 
 
 ### Solved Bugs
-
+| Bug                                                       | Solution                                          |
+|-----------------------------------------------------------|---------------------------------------------------|
+| The score wasn't updating in game                         | Score was only being updated at start of game. Moved inside game while True loop.|
+| Guess boards being updated incorrectly                    | Adjust [row] to [row - 1] to compensate.|
+| end_game() creating an infinte loop                       | Move user input inside the while loop.|
+| os.system('clear') not working on all os's                | Import sys library. Add a clear() function to ensure app works accross windows, macos and linux.|
+  
 
 ### Existing bugs
-
+I have not been able to identify any existing bugs.
 
 ### pep8 validation
 
