@@ -63,7 +63,6 @@ def user_options():
     """
     User input to choose to start the game or view the instructions
     """
-    
     # List containing instructions of how to play the game
     instructions = [
         "1. Aim of the game is to destroy all of the enemy ships.", ".",

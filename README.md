@@ -19,6 +19,8 @@ Battleships is a classic game. This version is written for a human user vs a com
 
 
 ### Data model/Technologies/structures used
+This app was created using python 3.
+All code written using a virtual environment (venv) within vs code/
 
 ## Testing
 
@@ -88,10 +90,9 @@ All tests achieved the expected result (pass).
 | Guess boards being updated incorrectly                    | Adjust [row] to [row - 1] to compensate.|
 | end_game() creating an infinte loop                       | Move user input inside the while loop.|
 | os.system('clear') not working on all os's                | Import sys library. Add a clear() function to ensure app works accross windows, macos and linux.|
-  
 
 ### Existing bugs
-I have not been able to identify any existing bugs.
+Keypresses by the user during the instructions cause the next input at prompt to be incorrect. I haven't been able to solve this but believe some disable.keyboard from the keyboard library may help.
 
 ### pep8 validation
 
