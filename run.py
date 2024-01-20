@@ -163,7 +163,7 @@ def player_place_ships():
     global player_coords_list
 
     while True:
-        x = input(Fore.CYAN + "\nEnter five coordinates (a1 to h8) separated by a space eg. a1 b2 c3 d4 f5: " + Fore.RESET)
+        x = input(Fore.CYAN + "\nEnter five coordinates (a1 to h8) separated by a space. \nFor example: a1 b2 c3 d4 f5: " + Fore.RESET)
         player_coords_list = x.split(" ")
 
         check_list = validate_coords(player_coords_list)
@@ -177,7 +177,8 @@ def player_place_ships():
             
             # populate the user board
             populate_user_board(PLAYER_BOARD, player_coords_list)
-            display_board(PLAYER_BOARD, Fore.CYAN + "And here are your ships:")
+            clear()
+            display_board(PLAYER_BOARD, Fore.CYAN + "And here are your ships:\n\n")
             break
         else:
             print(Fore.RED + "Not all coords match the required format (letter and number, e.g., a1)")
@@ -371,7 +372,7 @@ def end_game():
     Either restarts the game, exits the game or returns an error
     """
     while True:
-        endgame_choice = input("Would you like to play again? Press '1' for yes or '2' for no followed by Enter: ")
+        endgame_choice = input("Play again? \nPress " + Fore.MAGENTA + "1 " + Fore.RESET + "for yes or " + Fore.MAGENTA + "2 " + Fore.RESET + "for no. Then " + Fore.MAGENTA + "Enter: ")
         if endgame_choice == "1":
             print("Game starting in: ")
             print("3")
@@ -392,7 +393,7 @@ def end_game():
 
 
 def exit_program():
-    print("Exiting the program...")
+    print(Fore.MAGENTA + "Exiting the program...")
     sys.exit(0)
 
 
@@ -416,7 +417,7 @@ def main():
     print("\nPlayer coords list: ", player_coords_list)
     print("cpu coords list: ", cpu_coords_list)
     
-    print("\nPress ENTER to start the game")
+    print(Fore.MAGENTA + "\nPress ENTER to start the game")
     input()
     clear()
     
@@ -427,22 +428,25 @@ def main():
         
     while True:
         if current_player == 'player':
+            clear()
+
+            print(Fore.YELLOW + f"\n{username}'s score: ", player_score)
+            print(Fore.BLUE + f"Enemy's score: ", cpu_score)
+
             print(Fore.CYAN + f"\n{username}'s turn: ")
             display_board(PLAYER_GUESS_BOARD, Fore.YELLOW + f"{username}'s Guess Board")
             player_turn()
             player_score = count_ships(PLAYER_GUESS_BOARD)
-            print(Fore.YELLOW + f"\n{username}'s score: ", player_score)
-            print(Fore.BLUE + f"Enemy's score: ", cpu_score)
-            input("Press Enter to continue... ")
+            input(Fore.MAGENTA + "Press Enter to continue... ")
             clear()
             current_player = 'computer'
         else:
+            print(Fore.YELLOW + f"\n{username}'s score: ", player_score)
+            print(Fore.BLUE + f"Enemy's score: ", cpu_score)
             print(Fore.CYAN + "\nEnemy's turn: \n")
             computer_turn()
             cpu_score = count_ships(ENEMY_GUESS_BOARD)
-            print(Fore.YELLOW + f"\n{username}'s score: ", player_score)
-            print(Fore.BLUE + f"Enemy's score: ", cpu_score)
-            time.sleep(1.5)
+            time.sleep(3)
             current_player = 'player'
             
     # Check for game score after each turn and exits game if score is 5 and displays the winning board
