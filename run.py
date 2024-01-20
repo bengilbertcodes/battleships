@@ -1,7 +1,7 @@
 import random
 import time
 import re
-import os
+# import os
 import sys
 from os import system, name
 from random import randint
@@ -11,6 +11,9 @@ init(autoreset=True)
 
 # Create a title and intro text for the game.
 def create_title():
+    """
+    Uses two separate .txt files to create a title and intro to the game
+    """
     with open("title.txt", "r") as f:
         title = f.readlines()
     for line in title:
@@ -172,6 +175,7 @@ def player_place_ships():
             print(Fore.RED + "Incorrect coordinates entered. Please enter 5 unique coordinates...")
         elif check_list:
             print(Fore.GREEN + "All coordinates match the required format")
+            time.sleep(2)
             # convert coordinates to indices
             player_coords_list = [convert_to_indices(entry) for entry in player_coords_list]
             
@@ -393,6 +397,9 @@ def end_game():
 
 
 def exit_program():
+    """
+    Exits the program
+    """
     print(Fore.MAGENTA + "Exiting the program...")
     sys.exit(0)
 
@@ -401,22 +408,26 @@ def main():
     """
     Runs the game functions
     """
+    # Print a title
     create_title()
+    # User chooses name
     create_username()
+    # User chooses whether to play or view instructions
     user_options()
-    
+    # clear screen
     clear()
+    # Print the title again
     create_title()
+    # Player chooses ship locations
     print(Fore.CYAN + "First, choose your 5 ship locations. \n")
-    
+    # Empty board is displayed
     display_board(PLAYER_BOARD, Fore.CYAN + "Here's your board:")
-
+    # Player and cpu ships are created
     player_place_ships()
     cpu_place_ships()
-    
-    print("\nPlayer coords list: ", player_coords_list)
+    # REMEMBER TO TAKE THIS OUT (for testing only)
     print("cpu coords list: ", cpu_coords_list)
-    
+    # Waits for user prompt to continue
     print(Fore.MAGENTA + "\nPress ENTER to start the game")
     input()
     clear()
@@ -428,42 +439,63 @@ def main():
         
     while True:
         if current_player == 'player':
+            # clears screen
             clear()
-
+            # Display's the current score
             print(Fore.YELLOW + f"\n{username}'s score: ", player_score)
             print(Fore.BLUE + f"Enemy's score: ", cpu_score)
-
+            # Display's current player and guess board
             print(Fore.CYAN + f"\n{username}'s turn: ")
             display_board(PLAYER_GUESS_BOARD, Fore.YELLOW + f"{username}'s Guess Board")
+            # Run's player_turn() function
             player_turn()
+            # Updates player score
             player_score = count_ships(PLAYER_GUESS_BOARD)
+            # Waits for user prompt to continue
             input(Fore.MAGENTA + "Press Enter to continue... ")
+            # Clears screen
             clear()
+            # Moves to next player
             current_player = 'computer'
         else:
+            # Prints current score
             print(Fore.YELLOW + f"\n{username}'s score: ", player_score)
             print(Fore.BLUE + f"Enemy's score: ", cpu_score)
+            # Prints current player
             print(Fore.CYAN + "\nEnemy's turn: \n")
+            # run computer_turn()
             computer_turn()
+            # Updates the cpu_score
             cpu_score = count_ships(ENEMY_GUESS_BOARD)
+            # 3 second pause so user can see cpu guess
             time.sleep(3)
+            # Switches to next player
             current_player = 'player'
             
     # Check for game score after each turn and exits game if score is 5 and displays the winning board
         if count_ships(PLAYER_GUESS_BOARD) == 5:
             clear()
-            player_victory = (Fore.YELLOW + "You destroyed all the enemy's ships. You win!")
+            # display winning message
+            player_victory = (Fore.YELLOW + "\n\n\nYou destroyed all the enemy's ships. You win!")
             x = player_victory.center(80)
             print(x)
+            # Displays the player board and scores
             display_board(PLAYER_GUESS_BOARD, Fore.CYAN + f"{username}'s Guess Board")
+            print(Fore.YELLOW + f"\n{username}'s score: ", player_score)
+            print(Fore.BLUE + f"Enemy's score: ", cpu_score)
+            # call end_game function
             end_game()
             break
         elif count_ships(ENEMY_GUESS_BOARD) == 5:
             clear()
-            cpu_victory = (Fore.BLUE + "The enemy destroyed your fleet! You lose.")
+            # display defeat message
+            cpu_victory = (Fore.BLUE + "\n\n\nThe enemy destroyed your fleet! You lose.")
             y = cpu_victory.center(85)
             print(y)
+            # Display's winning board and scores
             display_board(ENEMY_GUESS_BOARD, Fore.BLUE + "Enemy's Guess Board")
+            print(Fore.YELLOW + f"\n{username}'s score: ", player_score)
+            print(Fore.BLUE + f"Enemy's score: ", cpu_score)
             end_game()
             break
 
