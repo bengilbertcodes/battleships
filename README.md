@@ -1,21 +1,65 @@
 # Battleships
 Link to deployed app: https://battleships-bgc-a8f0f32ea97f.herokuapp.com/
 
-mockups here
+![Battleships Game](assets/images/game-shot-1.png)
 
 ### User Demographic
 The Battleships game is intended for any user. 
 
 ### Purpose
 Battleships is a classic game. This version is written for a human user vs a computer opponent. 
+The game is intended to be easily played, containing straightforward instructions, visual UX and prompts for the user throughout.
 
 ### Instructions
+The aim of the game is to find/hit all five of your opponents ships before they find yours.
 
+At the start of the game the user enters their name and can then choose to start the game or read the instructions.
+
+Game start 
+
+Player chooses 5 coordinates (a1 to h8) for their ship placement.
+
+5 CPU ships are randomly generated. 
+
+The starting player is radomly chosen and player/cpu take turns. Player is prompted to enter coordinates for their guess and a 
+guess board is updated for a visual representation of the game. CPU coordinates are randomly generated.
+
+If a Miss is scored then the coordinate on the guess board is popluated with a O.
+
+For a Hit the board is populated with an X.
+
+Turns continue until either player or cpu scores 5 hits.
+
+User then has option to play again or exit the game.
 
 ### Features
+The app contains various user prompts which require specific data to be inputted for the game to function.
+
+Validations are in place for all these areas to ensure data is correct:
+
+Username: Player can enter their name at the start of the game and this is used throughtout the game to make the game more personal. User input is validated to ensure username entered is between 3 and 8 characters and only contains letters.
+
+Placing ships: The five player coordinates are checked to ensure they are the correct number and correct format (a1) and are all unique.
+The five cpu ships are randomly generated using 'randint'and checked to avoid any repeats and that they are chosen from the accetable range of valid coordinates.
+
+Choosing coordinate for shot: The user inputed coordinate is checked to ensure it matches the correct format, is within range and hasn't already been tried. The cpu shot can only be chosen randomly from within the correct range and is also checked to make sure repeat shots don't happen.
+
+Visual representation of the player board is used to aid player in choosing their initial five coordinates.
+
+Visual representations of the player and cpu guess boards display hit and miss information for each turn.
+
+A function to count score updates at the end of each player and cpu turns and a score board is updated and displayed throughout the game.
 
 
 ### Future development
+
+Integrating User Accounts to allow for high score and number of games data to be collected.
+
+Add an exit key for the user to be able to break out of the game at any point.
+
+Different board sizes.
+
+Different ship sizes.
 
 
 ### Data model/Technologies/structures used
@@ -96,17 +140,43 @@ All tests achieved the expected result (pass).
 Keypresses by the user during the instructions cause the next input at prompt to be incorrect. I haven't been able to solve this but believe some disable.keyboard from the keyboard library may help.
 
 ### pep8 validation
+All code was run through the pep8 linter at https://pep8ci.herokuapp.com/#
 
+Any warnings were fixed before final deployment.
 
-### Manual Testing Outcome report
+![pep8](assets/images/pep8.png)
 
 
 ## Deployment Steps
 ### Github
+The site was created using the Visual Studio Code editor and pushed to github to the remote repository https://github.com/bengilbertcodes/battleships
+
+The following git commands were used throughout development to push code to the remote repo:
+
+```git add .``` - This command was used to add the file(s) to the staging area before they are committed.
+
+```git commit -m "commit message..."``` - This command was used to commit changes to the local repository queue ready for the final step.
+
+```git push``` - This command was used to push all committed code to the remote repository on github.
 ### Heroku
+The below steps were followed to deploy this project to Heroku:
+
+* Go to Heroku and click "New" to create a new app.
+* Choose an app name and region region, click "Create app".
+* Go to "Settings" and navigate to Config Vars. Add the following config variables:
+    * PORT : 8000
+* Navigate to Buildpacks and add buildpacks for Python and NodeJS (in that order).
+* Navigate to "Deploy". Set the deployment method to Github and enter repository name and connect.
+* Scroll down to Manual Deploy, select "main" branch and click "Deploy Branch".
+* The app will now be deployed to heroku
 
 
 ## Credits
 
+Thanks go to:
 
+* Knowlegde Mavens [Youtube](https://www.youtube.com/watch?v=tF1WRCrd_HQ&t=596s&ab_channel=KnowledgeMavens) for getting my early game functions started, including the board layout and placing ships. [Github] https://github.com/gbrough/battleship/blob/main/single_player.py
 
+* My mentor at Code Institute Gareth McGirr for his advice throughout the project and many suggestions to the project on track. 
+
+* Dan Morriss, Malin Nilsson and Tomislav Dukez for their advice and suggestions. And also for testing the game.
