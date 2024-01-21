@@ -1,7 +1,7 @@
 # Battleships
 Link to deployed app: https://battleships-bgc-a8f0f32ea97f.herokuapp.com/
 
-![Battleships Game](assets/images/game-shot-1.png)
+![Battleships Game Mockup](assets/images/mockup.webp)
 
 ### User Demographic
 The Battleships game is intended for any user. 
