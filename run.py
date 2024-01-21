@@ -489,7 +489,7 @@ def main():
             # Updates the cpu_score
             cpu_score = count_ships(ENEMY_GUESS_BOARD)
             # 3 second pause so user can see cpu guess
-            time.sleep(3)
+            time.sleep(2.2)
             # Switches to next player
             current_player = 'player'
 

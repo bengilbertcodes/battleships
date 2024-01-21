@@ -15,9 +15,17 @@ The aim of the game is to find/hit all five of your opponents ships before they 
 
 At the start of the game the user enters their name and can then choose to start the game or read the instructions.
 
+![Game Instructions](assets/images/game-ins.webp)
+
 Game start 
 
+An empty game board is displayed.
+
+![Game Board](assets/images/game-board.webp)
+
 Player chooses 5 coordinates (a1 to h8) for their ship placement.
+
+![Populated Game Board](assets/images/full-game-board.webp)
 
 5 CPU ships are randomly generated. 
 
@@ -26,11 +34,19 @@ guess board is updated for a visual representation of the game. CPU coordinates 
 
 If a Miss is scored then the coordinate on the guess board is popluated with a O.
 
+![Player turn](assets/images/player-turn.webp)
+
 For a Hit the board is populated with an X.
 
 Turns continue until either player or cpu scores 5 hits.
 
+![5 Hits](assets/images/5-hits.webp)
+
 User then has option to play again or exit the game.
+
+![Endgame options](assets/images/endgame-opts.webp)
+
+![Exit game](assets/images/exit-game.webp)
 
 ### Features
 The app contains various user prompts which require specific data to be inputted for the game to function.
@@ -57,9 +73,9 @@ Integrating User Accounts to allow for high score and number of games data to be
 
 Add an exit key for the user to be able to break out of the game at any point.
 
-Different board sizes.
+Different board sizes. Either randomly chosen or picked by the user from a list of options.
 
-Different ship sizes.
+Different ship sizes and this should include more cpu logic. When a hit is scored, cpu could try adjacent locations to sink larger ships.
 
 
 ### Data model/Technologies/structures used
@@ -144,7 +160,7 @@ All code was run through the pep8 linter at https://pep8ci.herokuapp.com/#
 
 Any warnings were fixed before final deployment.
 
-![pep8](assets/images/pep8.png)
+![pep8](assets/images/pep8.webp)
 
 
 ## Deployment Steps
